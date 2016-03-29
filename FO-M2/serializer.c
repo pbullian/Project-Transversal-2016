@@ -145,12 +145,53 @@ Distance specifies the distance (in encoder ticks ) which you want your robot to
            break;
            
            
+           /*
+           The dpid command gets/sets the PIDA (Proportional, Integral, Derivative, and Acceleration) parameters for the distance PID control on the SerializerTM. If the PIDA parameters are absent, the PIDA values are returned.
+           */
            
+     case 'Dpid_set' :
+               strcpy(command, "dpid ");
+        sprintf(buf1, "%d", s.Set_P);
+           strcpy(command, buf1);
+            strcpy(command, ":");
+           sprintf(buf1, "%d", s.Set_I);
+           strcpy(command, buf1);
+            strcpy(command, ":");
+           sprintf(buf1, "%d", s.Set_D);
+           strcpy(command, buf1);
+            strcpy(command, ":");
+             sprintf(buf1, "%d", s.Set_L_A);
+           strcpy(command, buf1);
            
-     case 'Reset' :
-         Send_Serializer('Reset');
+         Send_Serializer(command);
          break;
-     
+     case 'Dpid_read' :
+         Send_Serializer('dpid');
+         break;
+           /*The rpid command sets the default PID params known to work with either the Stinger or Traxster Robotic Kits in the firmware. This makes it quick and easy to set up the PID params for both robots.*/
+
+    case 'Rpid_Stinger' :
+         Send_Serializer('rpid s');
+         break;
+
+           /*Once a digo command is issued, an internal state variable within the firmware is set to ‘1’, and it stays in that state until the algorithm has completed. Upon completion, the state is set to ‘0’. The ‘pids’ command simply returns the value of the internal variable to determine if the algorithms is currently busy, or if it has finished, thus allowing subsequent digo commands to be issued w/o clobbering previous ones.
+*/
+               case 'Pids' :
+         Send_Serializer('pids');
+         break;
            
+           /*The stop command immediately stops motor 1 and 2 connected to the motor ports. This will override any pwm, mogo, or digo commands which are currently active.*/
+                case 'Stop' :
+         Send_Serializer('stop');
+         break;
+           /*The vel command returns the left and right wheel velocities. The
+velocity returned is based on the PIDL parameter configuration.*/
+                case 'Vel' :
+         Send_Serializer('vel');
+         break;
+           /*Restores the factory default settings, and resets the board. NOTE: This will erase any configurations you have saved to EEPROM, including VPID, DPID, and baud rate settings.*/
+                case 'Restore' :
+         Send_Serializer('restore');
+         break;
            
 }
