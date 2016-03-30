@@ -18,11 +18,6 @@
 #include <LIB_BSE_GPIO.h>
 #include <LIB_BSE_UART.h>
 
-//recibo la estructura y traduzco los comandos.
-
-
-//Send_String();
-
 
 struct talk_serializer(struct COMMANDES_SERIALIZER s){
     char buf1[15];
@@ -224,9 +219,7 @@ void Send_Serializer(char *char_ptr){
     car_recu=getchar();   										//Reception du caractere
     if(car_recu=='>')					//Controle de la réponse aux caractères 'r' et 'R' uniquement
     {
-        Send_String(*char_ptr);
-        Send_String('\r');
-        //parte de M1 que va a recevoir les strings complet
+        //TODO: avec F0-M1
     }
 }
 
@@ -237,7 +230,7 @@ char *serializer_response(){
 }
 
 
-//receive a string (response) with the response, we cant utilize switch with a chain
+//receive a string (response) with the response, we can't utilize switch with an array of char
 struct receive_traduite(char *response, int option){
     char buf1[15];
     char buf2[15];
