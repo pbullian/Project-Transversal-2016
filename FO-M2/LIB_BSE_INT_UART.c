@@ -5,50 +5,39 @@
 // AUTH:PEREL/BULLIAN
 // DATE:15/03/2015
 // Version:1.0
-// Objectif: Conigurer et gÈrer l'UART1
+// Objectif: Conigurer et g»rer l'UART1
 // Target: C8051F02x
 // Tool chain: KEIL Eval 'c'
 //
-// 
 //------------------------------------------------------------------------------------
 // Includes
 //------------------------------------------------------------------------------------
-#include <c8051f020.h>                    // SFR declarations
+#include <c8051F020.h>                    // SFR declarations
 #include <LIB_BSE_UART.h>              //Config du µcontroleur
 #include <intrins.h>
 #include <LIB_BSE_GPIO.h> 
 //------------------------------------------------------------------------------------
 // Global Constants
 //------------------------------------------------------------------------------------
-#define BAUDRATE 115200					//Baudrate du UART en bps
+#define BAUDRATE 19200					//Baudrate du UART en bps
 #define SYSCLK   22118400				//SYSCLOCK en HZ
-//------------------------------------------------------------------------------------
-//  Configure Timer 1
-//------------------------------------------------------------------------------------
-void CFG_Clock_UART1(void)
-{
-	CKCON |=0x40;					  				//Timer4 utilise la Sysclock
-	//TMOD|=0x20;											//Timer1 CLK=system clock
-	//TMOD&=0x2f;											//Timer1 configurÈen timer 8bits avec auto-reload
-	TF4=0;													//Flag Timer dÈvalidÈe
-	TH4=-(SYSCLK/BAUDRATE/32);			//Valeur de rechargement
-	ET4=0;													//Interruption Timer4 dÈvalidÈe
-	TR4=1;													//Lance le timer4
-}
-//------------------------------------------------------------------------------------
-//  Configure UART0
+//----------------------------------------------------------------------------------
+//  Configure UART1 & Timer4
 //------------------------------------------------------------------------------------
 void CFG_UART1(void)
 {
-	SCON1=0x50;										//UART1->Mode1,8-bits,enable RX
-	//T4CON
-	RCLK1=1;											//T4CON Source clock timer4
-	TCLK1=1;
-	
-  PCON |=0x10;									//SMOD1=1	
-	PCON &=0xFB;									//SSTAT1
-	
-	TI1=1;												//Flag
+	//Config Timer 4
+	CKCON |=0x40;					  				    //Timer4 utilise la Sysclock
+	T4CON&=0xF7;										  	//Flag Timer 4 Effac»
+	RCAP4=-(SYSCLK/BAUDRATE/32);				//Valeur de rechargement
+	EIE2&=0xFB;												  //Interruption Timer4 d»valid»e
+	T4CON=0x04;											  	//Start Timer4
+	//Config UART1
+	T4CON|=0x30;												//RCLK1=1 TCLK1=1
+	PCON|=0x10;											  	//SMOD1=1
+	PCON&=0xF7;											  	//SSTAT1=0
+	SCON1=0x5E;
+	//EIE2|=0x40;	        						  	//Interruption UART1 autoris»e
 }
 //------------------------------------------------------------------------------------
 //  Fonction de gestion de L'UART Putchar
@@ -56,19 +45,17 @@ void CFG_UART1(void)
 char putchar(char c, char csg_tempo)
 {
 	xdata int i,timeout=0;
-	while(!TI1)
+
+	while((SCON1&0x02)==0)
 	{
 	for(i=0;i<17;i++)
 		_nop_();
 	csg_tempo--;
   if(csg_tempo==0)
 			return 0;
-	timeout++;
-	if(timeout==10)
-			return 0;
 	}
 	SBUF1=c;
-	TI1=0;
+	SCON1&=0xFD; //Flag á 0
 	return c;
 }
 //------------------------------------------------------------------------------------
@@ -81,7 +68,7 @@ char Send_String(char *char_ptr)
 	{
 		while(*char_ptr!='\0')
 		{
-			putchar(*char_ptr,15);
+			putchar(*char_ptr,120);
 			lg_car++;
 			char_ptr++;
 		}
@@ -99,10 +86,10 @@ char Send_String(char *char_ptr)
 char getchar(void)
 {
 	xdata char char_recu;
-	if(RI1==1)
+	if((SCON1&0x01)==1)										//RI1==1
 	{
 		char_recu=SBUF1;
-		RI1=0;
+		SCON1&=0xFE;										//RI1=0;
 		return char_recu;
 	}
 	else
@@ -116,9 +103,9 @@ char getchar(void)
 //------------------------------------------------------------------------------------
 void test_getchar_putchar_sendstring(void)
 {
-	xdata char getchar_test;
-	getchar_test=getchar();
-	putchar(getchar_test,15);
-	/*char longueur;
-	longueur=Send_String("abc");*/
+	//char longueur;
+	//longueur=Send_String("U U\n\r\0");
+	//Send_String("\0");
+	//putchar(longueur, 50);
 }
+
