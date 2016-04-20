@@ -148,6 +148,7 @@ sbit IT1   = TCON ^ 2;              /* EXT. INTERRUPT 1 TYPE      */
 sbit IE0   = TCON ^ 1;              /* EXT. INTERRUPT 0 EDGE FLAG */
 sbit IT0   = TCON ^ 0;              /* EXT. INTERRUPT 0 TYPE      */
 
+
 /*  SCON0  0x98 */
 sbit SM00  = SCON0 ^ 7;             /* SERIAL MODE CONTROL BIT 0           */
 sbit SM10  = SCON0 ^ 6;             /* SERIAL MODE CONTROL BIT 1           */

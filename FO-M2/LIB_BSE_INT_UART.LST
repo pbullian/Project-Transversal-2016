@@ -1,0 +1,139 @@
+C51 COMPILER V9.52.0.0   LIB_BSE_INT_UART                                                  04/07/2016 11:10:14 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE LIB_BSE_INT_UART
+OBJECT MODULE PLACED IN LIB_BSE_INT_UART.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LIB_BSE_INT_UART.c LARGE OPTIMIZE(1,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2
+                    -)
+
+line level    source
+
+   1          //------------------------------------------------------------------------------------
+   2          // LIB_BSE_INT_UART.c
+   3          //------------------------------------------------------------------------------------
+   4          // Copyright (C) 2005 Silicon Laboratories, Inc.
+   5          // AUTH:PEREL/BULLIAN
+   6          // DATE:15/03/2015
+   7          // Version:1.0
+   8          // Objectif: Conigurer et gérer l'UART1
+   9          // Target: C8051F02x
+  10          // Tool chain: KEIL Eval 'c'
+  11          //
+  12          //------------------------------------------------------------------------------------
+  13          // Includes
+  14          //------------------------------------------------------------------------------------
+  15          #include <c8051F020.h>                    // SFR declarations
+  16          #include <LIB_BSE_INT_UART.h>              //Config du µcontroleur
+  17          #include <intrins.h>
+  18          #include <LIB_BSE_GPIO.h> 
+  19          //------------------------------------------------------------------------------------
+  20          // Global Constants
+  21          //------------------------------------------------------------------------------------
+  22          #define BAUDRATE 19200          //Baudrate du UART en bps
+  23          #define SYSCLK   22118400       //SYSCLOCK en HZ
+  24          //----------------------------------------------------------------------------------
+  25          //  Configure UART1 & Timer4
+  26          //------------------------------------------------------------------------------------
+  27          void CFG_UART1(void)
+  28          { 
+  29   1        //Config Timer 4
+  30   1        CKCON |=0x40;                       //Timer4 utilise la Sysclock
+  31   1        T4CON&=0xF7;                        //Flag Timer 4 Effacé
+  32   1        RCAP4=-(SYSCLK/BAUDRATE/32);        //Valeur de rechargement
+  33   1        EIE2&=0xFB;                         //Interruption Timer4 dévalidée
+  34   1        T4CON=0x04;                         //Start Timer4
+  35   1        //Config UART1
+  36   1        T4CON|=0x30;                        //RCLK1=1 TCLK1=1
+  37   1        PCON|=0x10;                         //SMOD1=1 
+  38   1        PCON&=0xF7;                         //SSTAT1=0
+  39   1        SCON1=0x5E;
+  40   1        //EIE2|=0x40;                         //Interruption UART1 autorisée
+  41   1      }
+  42          //------------------------------------------------------------------------------------
+  43          //  Fonction de gestion de L'UART Putchar
+  44          //------------------------------------------------------------------------------------
+  45          char sputchar(char c, char csg_tempo)
+  46          {
+  47   1        xdata int i,timeout=0;
+  48   1        
+  49   1        while((SCON1&0x02)==0)
+  50   1        {
+  51   2        for(i=0;i<17;i++)
+  52   2          _nop_();
+  53   2        csg_tempo--;
+  54   2        if(csg_tempo==0)
+C51 COMPILER V9.52.0.0   LIB_BSE_INT_UART                                                  04/07/2016 11:10:14 PAGE 2   
+
+  55   2            return 0;
+  56   2        }
+  57   1        SBUF1=c;
+  58   1        SCON1&=0xFD; //Flag à 0
+  59   1        return c;
+  60   1      }
+  61          //------------------------------------------------------------------------------------
+  62          //  Fonction de gestion de L'UART envoie de string
+  63          //------------------------------------------------------------------------------------
+  64          char Send_String(char *char_ptr)
+  65          {
+  66   1        xdata char lg_car=0;
+  67   1        if(char_ptr!=0x00)
+  68   1        {
+  69   2          while(*char_ptr!='\0')
+  70   2          {
+  71   3            sputchar(*char_ptr,120);
+  72   3            lg_car++;
+  73   3            char_ptr++;
+  74   3          }
+  75   2        return lg_car;
+  76   2        }
+  77   1        else
+  78   1        {
+  79   2          return 0;
+  80   2        }
+  81   1        return 0;
+  82   1      }
+  83          //------------------------------------------------------------------------------------
+  84          //  Fonction de gestion de L'UART getchar
+  85          //------------------------------------------------------------------------------------
+  86          char getchar(void)
+  87          {
+  88   1        xdata char char_recu;
+  89   1        if((SCON1&0x01)==1)                   //RI1==1
+  90   1        {
+  91   2          char_recu=SBUF1;
+  92   2          SCON1&=0xFE;                    //RI1=0;
+  93   2          return char_recu;
+  94   2        }
+  95   1        else
+  96   1        {
+  97   2          return 0;
+  98   2        }
+  99   1        return 0;
+ 100   1      }
+ 101          //------------------------------------------------------------------------------------
+ 102          //  Fonction de TEST
+ 103          //------------------------------------------------------------------------------------
+ 104          void test_getchar_putchar_sendstring(void)
+ 105          {
+ 106   1        //char longueur;
+ 107   1        //longueur=Send_String("U U\n\r\0");
+ 108   1        //Send_String("\0");
+ 109   1        //putchar(longueur, 50);
+ 110   1      }
+ 111          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    261    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.52.0.0   LIB_BSE_INT_UART                                                  04/07/2016 11:10:14 PAGE 3   
+
+   XDATA SIZE       =     11    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

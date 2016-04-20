@@ -1,0 +1,395 @@
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE SERIALIZER
+OBJECT MODULE PLACED IN serializer.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE serializer.c LARGE OPTIMIZE(1,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          //------------------------------------------------------------------------------------
+   2          // serializer.c
+   3          //------------------------------------------------------------------------------------
+   4          // AUTH:PEREL/BULLIAN
+   5          // DATE:15/03/2016
+   6          //
+   7          // Target: C8051F02x
+   8          // Tool chain: KEIL Eval 'c'
+   9          //
+  10          //------------------------------------------------------------------------------------
+  11          // Includes
+  12          //------------------------------------------------------------------------------------
+  13          #include <string.h>
+  14          
+  15          #include <stdlib.h>
+  16          #include <intrins.h>
+  17          #include "Structure.h"
+  18          #include "LIB_BSE_INT_UART.h"
+  19          #include "serializer.h"
+  20          #include <stdio.h>
+  21          
+  22          
+  23          
+  24          extern xdata IN_M2 Struct_R;
+  25          extern xdata OUT_M2 Struct_E;
+  26          
+  27          
+  28          void talk_serializer(struct COMMANDES_SERIALIZER  *s,struct INFORMATIONS_SERIALIZER *r)
+  29          {
+  30   1          char buf1[15];
+  31   1          char command[25];
+  32   1          int placeholder;
+  33   1        
+  34   1          //struct INFORMATIONS_SERIALIZER *cptr = &r ;
+  35   1      
+  36   1      
+  37   1      
+  38   1          //Commande_non, Reset, Getenc_1, Getenc_2, Getenc_1_2, Clrenc_1, Clrenc_2, Clrenc_1_2, mogo_1, mogo_2,
+             - mogo_1_2, Vpid_set, Vpid_read,digo_1, digo_2, digo_1_2, Dpid_set, Dpid_read, Rpid_Stinger, Pids, Stop, Vel, Restore
+  39   1          switch(s->Etat_Commande){
+  40   2              case Reset :
+  41   2      
+  42   2                  Send_Serializer("reset");
+  43   2                  break;
+  44   2      
+  45   2                  //The getenc command returns the values of the encoder count (channel B) for the specified enc
+             -oder Id(s). NOTE: The encoder counts for channel A are used for internal VPID and DPID algorithms.
+  46   2              case Getenc_1 :
+  47   2                  Send_Serializer("getenc 1");
+  48   2                  //listen to response
+  49   2      //            receive_traduite(serializer_response(),1,cptr);
+  50   2                  break;
+  51   2              case Getenc_2:
+  52   2                  Send_Serializer("getenc 2");
+  53   2       //           receive_traduite(serializer_response(),2,cptr);
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 2   
+
+  54   2                  break;
+  55   2              case Getenc_1_2 :
+  56   2                  Send_Serializer("getenc 1 2");
+  57   2        //          receive_traduite(serializer_response(),3,cptr);
+  58   2      
+  59   2                  break;
+  60   2      
+  61   2                  //clrenc encoderId [encoderId]
+  62   2                  //The clrenc command clears the values of the encoder count (channel B) for the specified enco
+             -der Id.
+  63   2              case Clrenc_1 :
+  64   2                  Send_Serializer("clrenc 1");
+  65   2                  break;
+  66   2              case Clrenc_2 :
+  67   2                  Send_Serializer("clrenc 2");
+  68   2                  break;
+  69   2              case Clrenc_1_2 :
+  70   2                  Send_Serializer("clrenc 1 2");
+  71   2                  break;
+  72   2                  /*The mogo command sets motor speed using one or more complex parameters containing a <motorId
+             -:spd> value pair->
+  73   2      The motorId can be either 1 or 2, which corresponds to the Motor Terminal port.
+  74   2      The vel value specifies the motor velocity, and itâ€™s range depends on your VPID settings. See the V
+             -PID parameters section below to determine your MAX velocity. A positive value rotates the motors in one direction, which
+             - a negative value rotates the motors in the opposite direction.
+  75   2      You will have to determine which direction is positive for your motors, and connect the motors wires to th
+             -e terminals on the Serializer board in the appropriate configuration.*/
+  76   2      
+  77   2              case mogo_1 :
+  78   2                placeholder=s->Vitesse_Mot1;
+  79   2                  sprintf(buf1, "%d", placeholder);
+  80   2                  strcpy(command, "mogo 1:");
+  81   2                  strcpy(command, buf1);
+  82   2                  Send_Serializer(command);
+  83   2                  break;
+  84   2              case mogo_2 :
+  85   2                placeholder=s->Vitesse_Mot2;
+  86   2                  sprintf(buf1, "%d", placeholder);
+  87   2                  strcpy(command, "mogo 2:");
+  88   2                  strcpy(command, buf1);
+  89   2                  Send_Serializer(command);
+  90   2                  break;
+  91   2              case mogo_1_2 :
+  92   2                placeholder=s->Vitesse_Mot1;
+  93   2                
+  94   2                  sprintf(buf1, "%d",placeholder);
+  95   2                  
+  96   2              
+  97   2                 strcpy(command, "mogo 1:");
+  98   2                  strcat(command, buf1);
+  99   2              placeholder=s->Vitesse_Mot2;
+ 100   2                  sprintf(buf1, "%d", placeholder);
+ 101   2      
+ 102   2                  strcat(command, " 2:");
+ 103   2                  strcat(command, buf1);
+ 104   2                  Send_Serializer(command);
+ 105   2                  break;
+ 106   2                  /*The vpid command gets/sets the PIDL (Proportional, Integral, Derivative, and Loop) parameter
+             -s for the Velocity PID control on the SerializerTM. If the PIDL parameters are absent, the PIDL values are returned. Oth
+             -erwise the PIDL parameters are parsed, and saved (in eeprom). */
+ 107   2      
+ 108   2              case Vpid_set :
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 3   
+
+ 109   2                  strcpy(command, "vpid ");
+ 110   2              
+ 111   2                  sprintf(buf1, "%d", s->Set_P);
+ 112   2                  strcpy(command, buf1);
+ 113   2                  strcpy(command, ":");
+ 114   2                  sprintf(buf1, "%d", s->Set_I);
+ 115   2                  strcpy(command, buf1);
+ 116   2                  strcpy(command, ":");
+ 117   2                  sprintf(buf1, "%d", s->Set_D);
+ 118   2                  strcpy(command, buf1);
+ 119   2                  strcpy(command, ":");
+ 120   2                  sprintf(buf1, "%d", s->Set_L_A);
+ 121   2                  strcpy(command, buf1);
+ 122   2      
+ 123   2                  Send_Serializer(command);
+ 124   2                  break;
+ 125   2              case Vpid_read :
+ 126   2                  Send_Serializer("vpid");
+ 127   2       //           receive_traduite(serializer_response(),4,cptr);
+ 128   2      
+ 129   2                  break;
+ 130   2      
+ 131   2      
+ 132   2                  /*Simply put, the digo command allows you to command your robot to
+ 133   2      travel a specified distance, at a specified speed. This command uses the internal VPID and DPID algorithms
+             - to control velocity and distance. Therefore, you must have dual motors, and dual wheel encoders connected to the Serial
+             -izer motor ports and encoder inputs.
+ 134   2      You must also configure the VPID and DPID parameters so match the physical configuration of your robot. Pl
+             -ease see the VPID and DPID configuration sections below to configure the parameters for your robot. By default, the Seri
+             -alizer VPID and DPID parameters are configured to work with our Traxster Robot Kit.
+ 135   2      Id specifies the motor id, and can be either 1 or 2, which corresponds to the Motor Terminal port.
+ 136   2      Distance specifies the distance (in encoder ticks ) which you want your robot to travel.
+ 137   2      */
+ 138   2      
+ 139   2              case digo_1 :
+ 140   2                  strcpy(command, "digo 1 : ");
+ 141   2                  sprintf(buf1, "%d", s->Ticks_mot1);
+ 142   2                  strcpy(command, buf1);
+ 143   2                  strcpy(command, " : ");
+ 144   2              placeholder=s->Vitesse_Mot1;
+ 145   2                  sprintf(buf1, "%d", placeholder);
+ 146   2                  strcpy(command, buf1);
+ 147   2                  Send_Serializer(command);
+ 148   2                  break;
+ 149   2              case digo_2 :
+ 150   2                  strcpy(command, "digo 2 : ");
+ 151   2                  sprintf(buf1, "%d", s->Ticks_mot2);
+ 152   2                  strcpy(command, buf1);
+ 153   2                  strcpy(command, " : ");
+ 154   2              placeholder=s->Vitesse_Mot2;
+ 155   2                  sprintf(buf1, "%d",placeholder );
+ 156   2                  strcpy(command, buf1);
+ 157   2                  Send_Serializer(command);
+ 158   2                  break;
+ 159   2              case digo_1_2 :
+ 160   2                  strcpy(command, "digo 1 : ");
+ 161   2              placeholder=s->Vitesse_Mot1;
+ 162   2                  sprintf(buf1, "%d", s->Ticks_mot1);
+ 163   2                  strcpy(command, buf1);
+ 164   2                  strcpy(command, " : ");
+ 165   2                  sprintf(buf1, "%d", placeholder);
+ 166   2                  strcpy(command, buf1);
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 4   
+
+ 167   2                  strcpy(command, " 2 : ");
+ 168   2                  sprintf(buf1, "%d", s->Ticks_mot2);
+ 169   2                  strcpy(command, buf1);
+ 170   2                  strcpy(command, " : ");
+ 171   2              placeholder=s->Vitesse_Mot2;
+ 172   2                  sprintf(buf1, "%d", placeholder);
+ 173   2                  strcpy(command, buf1);
+ 174   2                  Send_Serializer(command);
+ 175   2                  break;
+ 176   2      
+ 177   2      
+ 178   2                  /*
+ 179   2                 The dpid command gets/sets the PIDA (Proportional, Integral, Derivative, and Acceleration) para
+             -meters for the distance PID control on the SerializerTM. If the PIDA parameters are absent, the PIDA values are returned
+             -.
+ 180   2                 */
+ 181   2      
+ 182   2              case Dpid_set :
+ 183   2                  strcpy(command, "dpid ");
+ 184   2                  sprintf(buf1, "%d", s->Set_P);
+ 185   2                  strcpy(command, buf1);
+ 186   2                  strcpy(command, ":");
+ 187   2                  sprintf(buf1, "%d", s->Set_I);
+ 188   2                  strcpy(command, buf1);
+ 189   2                  strcpy(command, ":");
+ 190   2                  sprintf(buf1, "%d", s->Set_D);
+ 191   2                  strcpy(command, buf1);
+ 192   2                  strcpy(command, ":");
+ 193   2                  sprintf(buf1, "%d", s->Set_L_A);
+ 194   2                  strcpy(command, buf1);
+ 195   2      
+ 196   2                  Send_Serializer(command);
+ 197   2                  break;
+ 198   2              case Dpid_read :
+ 199   2                  Send_Serializer("dpid");
+ 200   2       //           receive_traduite(serializer_response(),5,cptr);
+ 201   2      
+ 202   2                  break;
+ 203   2                  /*The rpid command sets the default PID params known to work with either the Stinger or Traxst
+             -er Robotic Kits in the firmware. This makes it quick and easy to set up the PID params for both robots.*/
+ 204   2      
+ 205   2              case Rpid_Stinger :
+ 206   2                  Send_Serializer("rpid s");
+ 207   2                  break;
+ 208   2      
+ 209   2                  /*Once a digo command is issued, an internal state variable within the firmware is set to â�
+             -�˜1â€™, and it stays in that state until the algorithm has completed. Upon completion, the state is set to â€˜
+             -0â€™. The â€˜pidsâ€™ command simply returns the value of the internal variable to determine if the algorit
+             -hms is currently busy, or if it has finished, thus allowing subsequent digo commands to be issued w/o clobbering previou
+             -s ones.
+ 210   2      */
+ 211   2              case Pids :
+ 212   2                  Send_Serializer("pids");
+ 213   2        //          receive_traduite(serializer_response(),6,cptr);
+ 214   2      
+ 215   2                  break;
+ 216   2      
+ 217   2                  /*The stop command immediately stops motor 1 and 2 connected to the motor ports. This will ove
+             -rride any pwm, mogo, or digo commands which are currently active.*/
+ 218   2              case Stop :
+ 219   2                  Send_Serializer("stop");
+ 220   2                  break;
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 5   
+
+ 221   2                  /*The vel command returns the left and right wheel velocities. The
+ 222   2      velocity returned is based on the PIDL parameter configuration.*/
+ 223   2              case Vel :
+ 224   2                  Send_Serializer("vel");
+ 225   2        //          receive_traduite(serializer_response(),7,cptr);
+ 226   2      
+ 227   2                  break;
+ 228   2                  /*Restores the factory default settings, and resets the board. NOTE: This will erase any confi
+             -gurations you have saved to EEPROM, including VPID, DPID, and baud rate settings.*/
+ 229   2              case Restore :
+ 230   2                  Send_Serializer("restore");
+ 231   2                  break;
+ 232   2      
+ 233   2          }
+ 234   1      
+ 235   1      }
+*** WARNING C280 IN LINE 28 OF serializer.c: 'r': unreferenced local variable
+ 236          
+ 237          
+ 238          
+ 239          void Send_Serializer(const char* char_ptr){
+ 240   1          char command[50];
+ 241   1         
+ 242   1        strcpy(command, char_ptr);
+ 243   1           strcat(command, "\r\n\r");
+ 244   1          Send_String(command);
+ 245   1      }
+ 246          
+ 247          //reply from the serializer
+ 248          void serializer_response(){
+ 249   1      
+ 250   1          //TODO: avec F0-M1
+ 251   1        
+ 252   1      }
+ 253          
+ 254          
+ 255          ////receive a string (response) with the response, we can't utilize switch with an array of char
+ 256          //void receive_traduite(char *response, int option,struct INFORMATIONS_SERIALIZER *r){
+ 257          //    char buf1[15];
+ 258          //    char buf2[15];
+ 259          //    char * pch;
+ 260          
+ 261          //    //Reponse_non, Rep_getenc, Rep_vpid, Rep_dpid, Rep_pids, Rep_vel
+ 262          //    switch(response) {
+ 263          
+ 264          //            //The getenc command returns the values of the encoder count (channel B) for the specified e
+             -ncoder Id(s). NOTE: The encoder counts for channel A are used for internal VPID and DPID algorithms.
+ 265          //        case 1 :
+ 266          //            r->Etat_Response=Rep_getenc;
+ 267          //            r->Read_Val_enc_1 = sscanf(response, "%d", &i);
+ 268          //            break;
+ 269          //        case 2 :
+ 270          //            r->Etat_Response=Rep_getenc;
+ 271          //            r->Read_Val_enc_2 = sscanf(response, "%d", &i);
+ 272          //            break;
+ 273          //        case 3 :
+ 274          //            r->Etat_Response=Rep_gestenc;
+ 275          //            pch = strtok (str," ");
+ 276          //            r->Read_Val_enc_1 = pch;
+ 277          //            r->Read_Val_enc_2 = pch;
+ 278          //            break;
+ 279          
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 6   
+
+ 280          
+ 281          //            /*The vpid command gets/sets the PIDL (Proportional, Integral, Derivative, and Loop) paramet
+             -ers for the Velocity PID control on the SerializerTM. If the PIDL parameters are absent, the PIDL values are returned. O
+             -therwise the PIDL parameters are parsed, and saved (in eeprom). */
+ 282          
+ 283          
+ 284          //        case 4 :
+ 285          //            r->Etat_Response=Rep_vpid;
+ 286          //            pch = strtok (str," ");
+ 287          //            r->Read_P = pch;
+ 288          //            r->Read_I = pch;
+ 289          //            r->Read_D = pch;
+ 290          //            r->Read_L_A = pch;
+ 291          //            break;
+ 292          
+ 293          
+ 294          //            /*
+ 295          //           The dpid command gets/sets the PIDA (Proportional, Integral, Derivative, and Acceleration) pa
+             -rameters for the distance PID control on the SerializerTM. If the PIDA parameters are absent, the PIDA values are return
+             -ed.
+ 296          //           */
+ 297          
+ 298          
+ 299          
+ 300          //        case 5 :
+ 301          //            r->Etat_Response=Rep_dpid;
+ 302          //            pch = strtok (str," ");
+ 303          //            r->Read_P = pch;
+ 304          //            r->Read_I = pch;
+ 305          //            r->Read_D = pch;
+ 306          //            r->Read_L_A = pch;
+ 307          //            break;
+ 308          
+ 309          //            /*Once a digo command is issued, an internal state variable within the firmware is set to â
+             -€˜1â€™, and it stays in that state until the algorithm has completed. Upon completion, the state is set to â€
+             -˜0â€™. The â€˜pidsâ€™ command simply returns the value of the internal variable to determine if the algor
+             -ithms is currently busy, or if it has finished, thus allowing subsequent digo commands to be issued w/o clobbering previ
+             -ous ones.
+ 310          //*/
+ 311          //        case 6 :
+ 312          //            r->Etat_Response=Rep_pids;
+ 313          //            pch = strtok (str," ");
+ 314          //            r->Read_Pids = sscanf(response, "%d", &i);
+ 315          //            break;
+ 316          
+ 317          //            /*The vel command returns the left and right wheel velocities. The
+ 318          //velocity returned is based on the PIDL parameter configuration.*/
+ 319          //        case 7 :
+ 320          //            r->Etat_Response=Rep_vel;
+ 321          //            pch = strtok (str," ");
+ 322          //            r->Read_Vitesse_mot1 = pch;
+ 323          //            r->Read_Vitesse_mot2 = pch;
+ 324          //            break;
+ 325          
+ 326          //    }
+ 327          //return 0;
+ 328          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3285    ----
+   CONSTANT SIZE    =    174    ----
+C51 COMPILER V9.52.0.0   SERIALIZER                                                        04/07/2016 11:10:14 PAGE 7   
+
+   XDATA SIZE       =    101    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

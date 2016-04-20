@@ -1,0 +1,71 @@
+C51 COMPILER V9.52.0.0   LIB_BSE_CONFIG_GLOBALE                                            04/07/2016 11:10:14 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE LIB_BSE_CONFIG_GLOBALE
+OBJECT MODULE PLACED IN LIB_BSE_Config_Globale.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LIB_BSE_Config_Globale.c LARGE OPTIMIZE(1,SPEED) BROWSE DEBUG OBJECTEXTEND 
+                    -TABS(2)
+
+line level    source
+
+   1          //------------------------------------------------------------------------------------
+   2          // LIB_BSE_Config_Globale.c
+   3          //------------------------------------------------------------------------------------
+   4          // Copyright (C) 2005 Silicon Laboratories, Inc.
+   5          // AUTH:PEREL/BULLIAN
+   6          // DATE:15/03/2016
+   7          // Version:1.0
+   8          // Objectif: COnfigurer l'horloge et les sources de reset du 8051F020
+   9          // Target: C8051F02x
+  10          // Tool chain: KEIL Eval 'c'
+  11          //------------------------------------------------------------------------------------
+  12          // Includes
+  13          //------------------------------------------------------------------------------------
+  14          #include <c8051f020.h>                    // SFR declarations
+  15          #include <LIB_BSE_Config_Globale.h>       //Config du µcontroleur
+  16          //#include <stdio.h> 
+  17          //-----------------------------------------------------------------------------
+  18          //  Initialisation subroutines
+  19          //-----------------------------------------------------------------------------
+  20          void Init_Device(void)
+  21          {
+  22   1         Reset_Sources_Init();   //Sources Reset et watchdog
+  23   1         Oscillator_Init();      //Configuration de l'oscillateur externe
+  24   1      }
+  25          //-----------------------------------------------------------------------------
+  26          //  Oscillator_Init
+  27          //-----------------------------------------------------------------------------
+  28          void Oscillator_Init(void)
+  29          {
+  30   1          int i = 0;
+  31   1          OSCXCN    = 0x67;
+  32   1          for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
+  33   1          while ((OSCXCN & 0x80) == 0);
+  34   1          OSCICN    = 0x08;
+  35   1      }
+  36          //-----------------------------------------------------------------------------
+  37          //  Reset_Sources_Init
+  38          //-----------------------------------------------------------------------------
+  39          void Reset_Sources_Init(void)
+  40          {
+  41   1         EA=0;           //Désactive les interruptions
+  42   1         WDTCN = 0xde;   //Enleve le watchdog timer   
+  43   1         WDTCN = 0xad;   //
+  44   1         EA = 1;   // Active les interruptions
+  45   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.52.0.0   LIB_BSE_CONFIG_GLOBALE                                            04/07/2016 11:10:14 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

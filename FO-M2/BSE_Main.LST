@@ -1,0 +1,91 @@
+C51 COMPILER V9.52.0.0   BSE_MAIN                                                          04/07/2016 11:10:14 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE BSE_MAIN
+OBJECT MODULE PLACED IN BSE_Main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE BSE_Main.c LARGE OPTIMIZE(1,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          //------------------------------------------------------------------------------------
+   2          // BSE_Main.c
+   3          //------------------------------------------------------------------------------------
+   4          // AUTH:PEREL/BULLIAN
+   5          // DATE:15/03/2016
+   6          //
+   7          // Target: C8051F02x
+   8          // Tool chain: KEIL Eval 'c'
+   9          //
+  10          //------------------------------------------------------------------------------------
+  11          // Includes
+  12          //------------------------------------------------------------------------------------
+  13          #include <c8051f020.h>                      // SFR declarations
+  14          #include "LIB_BSE_Config_Globale.h"
+  15          #include "LIB_BSE_GPIO.h"
+  16          #include "LIB_BSE_INT_UART.h"
+  17          //#include <stdio.h>   
+  18          #include "serializer.h"
+  19          #include "Structure.h"
+  20          
+  21           IN_M2 xdata Struct_R;
+  22           OUT_M2 xdata Struct_E;
+  23          
+  24          
+  25          
+  26          
+  27          
+  28          void main (void) {
+  29   1      //------------------------------------------------------------------------------------
+  30   1      // Programme de config
+  31   1      //------------------------------------------------------------------------------------
+  32   1         Init_Device();                           // Initialisation du microcontrôleur
+  33   1         Port_IO_Init();
+  34   1         CFG_UART1();
+  35   1        
+  36   1        
+  37   1      //------------------------------------------------------------------------------------
+  38   1      // Programme main
+  39   1      //------------------------------------------------------------------------------------
+  40   1      while(1)
+  41   1      {
+  42   2      unsigned int num=45;
+  43   2        
+  44   2         xdata char car_recu;
+  45   2               
+  46   2              //putchar('\n',80);     
+  47   2              car_recu=getchar();
+  48   2              if(car_recu=='>')    
+  49   2                      {
+  50   3             Struct_R.Etat_Commande=mogo_1_2;
+  51   3        
+  52   3        Struct_R.Vitesse_Mot1=45;
+  53   3        Struct_R.Vitesse_Mot2=45;
+  54   3        //Send_String("coucou\r\n");
+  55   3        
+C51 COMPILER V9.52.0.0   BSE_MAIN                                                          04/07/2016 11:10:14 PAGE 2   
+
+  56   3        talk_serializer(&Struct_R,&Struct_E);
+  57   3              car_recu='p';
+  58   3                      //  Send_String("blink 1:50 2:50\r\n");
+  59   3              }else if (car_recu=='s')                {
+  60   3              Send_String("stop\r\n\r");
+  61   3              car_recu='p';
+  62   3                  }
+  63   2        
+  64   2      }
+  65   1      
+  66   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    126    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =     36    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

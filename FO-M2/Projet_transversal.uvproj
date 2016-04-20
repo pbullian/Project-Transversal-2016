@@ -118,7 +118,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -129,7 +129,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -140,7 +140,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>9</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -154,7 +154,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver></Driver>
+            <Driver>BIN\SiC8051F.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -168,12 +168,12 @@
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>0</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -218,7 +218,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0xffff</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -289,7 +289,7 @@
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
-            <Optimize>8</Optimize>
+            <Optimize>1</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
@@ -375,6 +375,46 @@
               <FileName>LIB_BSE_Config_Globale.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\LIB_BSE_Config_Globale.c</FilePath>
+            </File>
+            <File>
+              <FileName>c8051F020.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\c8051F020.h</FilePath>
+            </File>
+            <File>
+              <FileName>LIB_BSE_Config_Globale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LIB_BSE_Config_Globale.h</FilePath>
+            </File>
+            <File>
+              <FileName>LIB_BSE_GPIO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LIB_BSE_GPIO.h</FilePath>
+            </File>
+            <File>
+              <FileName>LIB_BSE_UART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LIB_BSE_UART.h</FilePath>
+            </File>
+            <File>
+              <FileName>serializer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\serializer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Structure.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Structure.h</FilePath>
+            </File>
+            <File>
+              <FileName>UART1_RINGBUFFER_LIB.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UART1_RINGBUFFER_LIB.C</FilePath>
+            </File>
+            <File>
+              <FileName>UART1_RingBuffer_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\UART1_RingBuffer_lib.h</FilePath>
             </File>
           </Files>
         </Group>

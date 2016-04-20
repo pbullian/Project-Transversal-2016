@@ -1,0 +1,89 @@
+C51 COMPILER V9.52.0.0   LIB_BSE_GPIO                                                      04/07/2016 11:10:14 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE LIB_BSE_GPIO
+OBJECT MODULE PLACED IN LIB_BSE_GPIO.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LIB_BSE_GPIO.c LARGE OPTIMIZE(1,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          //------------------------------------------------------------------------------------
+   2          // LIB_BSE_GPIO.c
+   3          //------------------------------------------------------------------------------------
+   4          // Copyright (C) 2005 Silicon Laboratories, Inc.
+   5          // AUTH:PEREL/BULLIAN
+   6          // DATE:15/03/2016
+   7          // Version:1.0
+   8          // Objectif: COnfigurer les entrées/sorties du 8051F020
+   9          // Target: C8051F02x
+  10          // Tool chain: KEIL Eval 'c'
+  11          //
+  12          // 
+  13          //------------------------------------------------------------------------------------
+  14          // Includes
+  15          //------------------------------------------------------------------------------------
+  16          #include <c8051f020.h>                    // SFR declarations
+  17          #include <LIB_BSE_GPIO.h>                 //Config du µcontroleur
+  18          #include <intrins.h>
+  19          //-----------------------------------------------------------------------------
+  20          //  Gestion des I/O
+  21          //----------------------------------------------------------------------------
+  22          void Port_IO_Init()
+  23          {
+  24   1          // P0.0  -  TX1 (UART1), Open-Drain, Digital
+  25   1          // P0.1  -  RX1 (UART1), Open-Drain, Digital
+  26   1          // P0.2  -  T1 (Timer1), Open-Drain, Digital
+  27   1          // P0.3  -  INT1 (Tmr1), Open-Drain, Digital
+  28   1          // P0.4  -  T4 (Timer4), Open-Drain, Digital
+  29   1          // P0.5  -  T4EX (Tmr4), Open-Drain, Digital
+  30   1          // P0.6  -  SYSCLK,      Open-Drain, Digital
+  31   1          // P0.7  -  Unassigned,  Open-Drain, Digital
+  32   1      
+  33   1          // P1.0  -  Unassigned,  Open-Drain, Digital
+  34   1          // P1.1  -  Unassigned,  Open-Drain, Digital
+  35   1          // P1.2  -  Unassigned,  Open-Drain, Digital
+  36   1          // P1.3  -  Unassigned,  Open-Drain, Digital
+  37   1          // P1.4  -  Unassigned,  Open-Drain, Digital
+  38   1          // P1.5  -  Unassigned,  Open-Drain, Digital
+  39   1          // P1.6  -  Unassigned,  Open-Drain, Digital
+  40   1          // P1.7  -  Unassigned,  Open-Drain, Digital
+  41   1      
+  42   1          // P2.0  -  Unassigned,  Open-Drain, Digital
+  43   1          // P2.1  -  Unassigned,  Open-Drain, Digital
+  44   1          // P2.2  -  Unassigned,  Open-Drain, Digital
+  45   1          // P2.3  -  Unassigned,  Open-Drain, Digital
+  46   1          // P2.4  -  Unassigned,  Open-Drain, Digital
+  47   1          // P2.5  -  Unassigned,  Open-Drain, Digital
+  48   1          // P2.6  -  Unassigned,  Open-Drain, Digital
+  49   1          // P2.7  -  Unassigned,  Open-Drain, Digital
+  50   1      
+  51   1          // P3.0  -  Unassigned,  Open-Drain, Digital
+  52   1          // P3.1  -  Unassigned,  Open-Drain, Digital
+  53   1          // P3.2  -  Unassigned,  Open-Drain, Digital
+  54   1          // P3.3  -  Unassigned,  Open-Drain, Digital
+  55   1          // P3.4  -  Unassigned,  Open-Drain, Digital
+C51 COMPILER V9.52.0.0   LIB_BSE_GPIO                                                      04/07/2016 11:10:14 PAGE 2   
+
+  56   1          // P3.5  -  Unassigned,  Open-Drain, Digital
+  57   1          // P3.6  -  Unassigned,  Open-Drain, Digital
+  58   1          // P3.7  -  Unassigned,  Open-Drain, Digital
+  59   1      
+  60   1          XBR1      = 0x98;
+  61   1          XBR2      = 0x5C;
+  62   1          P0MDOUT   = 0x03;
+  63   1      }
+  64          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     10    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

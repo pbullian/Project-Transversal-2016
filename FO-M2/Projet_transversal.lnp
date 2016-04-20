@@ -1,0 +1,8 @@
+"STARTUP.obj",
+"LIB_BSE_INT_UART.obj",
+"BSE_Main.obj",
+"LIB_BSE_GPIO.obj",
+"LIB_BSE_Config_Globale.obj",
+"serializer.obj" 
+TO "Projet_transversal" 
+RAMSIZE(256) 

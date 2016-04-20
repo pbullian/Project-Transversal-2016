@@ -5,7 +5,7 @@
 // AUTH:PEREL/BULLIAN
 // DATE:15/03/2015
 // Version:1.0
-// Objectif: Conigurer et gÈrer l'UART1
+// Objectif: Conigurer et gérer l'UART1
 // Target: C8051F02x
 // Tool chain: KEIL Eval 'c'
 //
@@ -13,7 +13,7 @@
 // Includes
 //------------------------------------------------------------------------------------
 #include <c8051F020.h>                    // SFR declarations
-#include <LIB_BSE_UART.h>              //Config du µcontroleur
+#include <LIB_BSE_INT_UART.h>              //Config du µcontroleur
 #include <intrins.h>
 #include <LIB_BSE_GPIO.h> 
 //------------------------------------------------------------------------------------
@@ -25,27 +25,27 @@
 //  Configure UART1 & Timer4
 //------------------------------------------------------------------------------------
 void CFG_UART1(void)
-{
+{	
 	//Config Timer 4
 	CKCON |=0x40;					  				    //Timer4 utilise la Sysclock
-	T4CON&=0xF7;										  	//Flag Timer 4 EffacÈ
+	T4CON&=0xF7;										  	//Flag Timer 4 Effacé
 	RCAP4=-(SYSCLK/BAUDRATE/32);				//Valeur de rechargement
-	EIE2&=0xFB;												  //Interruption Timer4 dÈvalidÈe
+	EIE2&=0xFB;												  //Interruption Timer4 dévalidée
 	T4CON=0x04;											  	//Start Timer4
 	//Config UART1
 	T4CON|=0x30;												//RCLK1=1 TCLK1=1
-	PCON|=0x10;											  	//SMOD1=1
+	PCON|=0x10;											  	//SMOD1=1	
 	PCON&=0xF7;											  	//SSTAT1=0
 	SCON1=0x5E;
-	//EIE2|=0x40;	        						  	//Interruption UART1 autorisÈe
+	//EIE2|=0x40;	        						  	//Interruption UART1 autorisée
 }
 //------------------------------------------------------------------------------------
 //  Fonction de gestion de L'UART Putchar
 //------------------------------------------------------------------------------------
-char putchar(char c, char csg_tempo)
+char sputchar(char c, char csg_tempo)
 {
 	xdata int i,timeout=0;
-
+	
 	while((SCON1&0x02)==0)
 	{
 	for(i=0;i<17;i++)
@@ -55,7 +55,7 @@ char putchar(char c, char csg_tempo)
 			return 0;
 	}
 	SBUF1=c;
-	SCON1&=0xFD; //Flag ‡ 0
+	SCON1&=0xFD; //Flag à 0
 	return c;
 }
 //------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ char Send_String(char *char_ptr)
 	{
 		while(*char_ptr!='\0')
 		{
-			putchar(*char_ptr,120);
+			sputchar(*char_ptr,120);
 			lg_car++;
 			char_ptr++;
 		}
