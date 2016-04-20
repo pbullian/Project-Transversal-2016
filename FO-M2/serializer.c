@@ -265,7 +265,7 @@ char * serializer_response(){
 void receive_traduite(char *response, int option,struct INFORMATIONS_SERIALIZER *r){
     char buf1[15];
     char buf2[15];
-    char * pch;
+    char *pch;
 
     //Reponse_non, Rep_getenc, Rep_vpid, Rep_dpid, Rep_pids, Rep_vel
     switch(response) {
