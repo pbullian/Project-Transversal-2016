@@ -1,0 +1,1 @@
+//void Traite_Commande(const char com[],char** Res);
