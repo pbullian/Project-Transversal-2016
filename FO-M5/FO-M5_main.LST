@@ -1,0 +1,35 @@
+C51 COMPILER V9.52.0.0   FO_M5_MAIN                                                        04/06/2016 23:30:57 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE FO_M5_MAIN
+OBJECT MODULE PLACED IN FO-M5_main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE FO-M5_main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          //#include <Structures.h>
+   2          #include <FO-M5.h>
+   3          
+   4          void main()
+   5          {
+   6   1        char Tab_INFO[TAILLE_TAB];
+   7   1        //struct COMMANDES COMMANDE_M1;
+   8   1        struct INFORMATIONS INFORMATION_M1;
+   9   1      
+  10   1        Initialisation_INFORMATIONS(&INFORMATION_M1);
+  11   1        
+  12   1        //Tab_INFO=Send_Tab_MS1_M1();
+  13   1        //COMMANDES_MAJ ce que l'on reçoit de M1
+  14   1        
+  15   1        MAJ_STRUCT_INFORMATIONS_CDC_from_MASTER(&COMMANDES_MAJ); // En fonction de ce Que M1 nous envoie, modific
+             -ation de la structure information, et communication avec M3 et M4
+*** ERROR C202 IN LINE 15 OF FO-M5_main.c: 'COMMANDES_MAJ': undefined identifier
+  16   1        MAJ_STRUCT_COMMANDES_SER_from_MASTER(&COMMANDES_MAJ); // MAJ de la structure a envoyer à M2 en fonction d
+             -e Ce que M1 nous envoie
+*** ERROR C202 IN LINE 16 OF FO-M5_main.c: 'COMMANDES_MAJ': undefined identifier
+  17   1        
+  18   1      
+  19   1      }
+  20          
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  2 ERROR(S)

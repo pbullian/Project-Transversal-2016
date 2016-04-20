@@ -1,0 +1,6 @@
+"BSE_Main.obj",
+"LIB_BSE_ADC.obj",
+"LIB_BSE_Config_Globale.obj",
+"LIB_BSE_GPIO.obj" 
+TO "F0-M4" 
+RAMSIZE(256) 

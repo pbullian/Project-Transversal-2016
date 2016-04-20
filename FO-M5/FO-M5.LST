@@ -1,0 +1,265 @@
+C51 COMPILER V9.52.0.0   FO_M5                                                             04/06/2016 23:30:57 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE FO_M5
+OBJECT MODULE PLACED IN FO-M5.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE FO-M5.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          
+   2          #include <FO-M5.h>
+   3          #define RAYON_ROUE 10
+   4          #define RAYON_PARCOURS 35
+   5          #define PI 3.14159
+   6          #define TICKS_PAR_TOUR 624
+   7          
+   8          
+   9          struct INFORMATIONS INFORMATIONS_CDC;
+  10          struct COMMANDES_SERIALIZER COMMANDES_SER;
+  11          char TAB_COMMANDES_SLAVE[TAILLE_TAB];
+  12          
+  13          
+  14          int Compteur_Duree;
+  15          unsigned char Rechargement_L;
+  16          unsigned char Rechargement_H;
+  17          
+  18          void MAJ_STRUCT_INFORMATIONS_CDC_from_MASTER(struct COMMANDES* const COMMANDES){
+  19   1        /** Variables */
+  20   1        int Distance; //A changer
+  21   1        int Duree; //A changer
+  22   1      
+  23   1        /** Communication FO-M4*/
+  24   1      
+  25   1      
+  26   1        if(COMMANDES->Etat_DCT_Obst!=DCT_non){
+  27   2      
+  28   2            if(COMMANDES->Etat_DCT_Obst==oui_180){
+  29   3              AMX0SL    = 0x02; // Choix de AIN02 comme pin de conversion - Correspond au telemetre 180
+  30   3              INFORMATIONS_CDC.Etat_DCT_Obst=DCT_Obst_180_oui;
+  31   3            }
+  32   2      
+  33   2            if(COMMANDES->Etat_DCT_Obst==oui_360){
+  34   3              AMX0SL    = 0x03; // Choix de AIN03 comme pin de conversion - Correspond au telemetre 360
+  35   3              INFORMATIONS_CDC.Etat_DCT_Obst=DCT_Obst_360_oui;
+  36   3            }
+  37   2      
+  38   2            P2__2=0;
+  39   2      
+  40   2      
+  41   2            INFORMATIONS_CDC.Tab_Val_Obst[INFORMATIONS_CDC.Nbre_Val_obst]=Distance;
+  42   2            INFORMATIONS_CDC.Nbre_Val_obst++;
+  43   2      
+  44   2            P2__2=1;
+  45   2          }
+  46   1      
+  47   1        else
+  48   1            INFORMATIONS_CDC.Etat_DCT_Obst=DCT_Obst_non;
+  49   1      
+  50   1        /** Communication FO-M2*/
+  51   1      
+  52   1      
+  53   1        /** Communication FO-M3*/
+  54   1        if(COMMANDES->Etat_Servo==Servo_H)
+  55   1        {
+C51 COMPILER V9.52.0.0   FO_M5                                                             04/06/2016 23:30:57 PAGE 2   
+
+  56   2          INFORMATIONS_CDC.Etat_BUT_Servo=BUT_Servo_H;
+  57   2      
+  58   2          Rechargement_L=0xF8;
+  59   2          Rechargement_H=0xCA;
+  60   2          TL0=Rechargement_L;
+  61   2          TH0=Rechargement_H;
+  62   2      
+  63   2          TR0=1;
+  64   2      
+  65   2          //Chargement du timer 0 en fct de la duree
+  66   2      
+  67   2          if(Compteur_Duree*100==Duree)
+  68   2          {
+  69   3            P2__3=!P2__3;
+  70   3            INFORMATIONS_CDC.Etat_BUT_Servo=BUT_Servo_non;
+  71   3            Compteur_Duree=0;
+  72   3            TR0=0;
+  73   3          }
+  74   2        }
+  75   1      
+  76   1      
+  77   1      
+  78   1      
+  79   1      }
+  80          
+  81          void MAJ_STRUCT_INFORMATIONS_CDC_from_SLAVE(char const* Tab_INFO){
+  82   1          /** Communication FO-MS1*/
+  83   1      }
+*** WARNING C280 IN LINE 81 OF FO-M5.c: 'Tab_INFO': unreferenced local variable
+  84          
+  85          void MAJ_TAB_COMMANDES_SLAVE_from_MASTER(struct COMMANDES* const COMMANDES){
+  86   1      
+  87   1      }
+*** WARNING C280 IN LINE 85 OF FO-M5.c: 'COMMANDES': unreferenced local variable
+  88          
+  89          void MAJ_STRUCT_COMMANDES_SER_from_MASTER(struct COMMANDES* const COMMANDES){
+  90   1      
+  91   1          //FAIRE UN SWITCH CASE
+  92   1      
+  93   1        switch (COMMANDES->Etat_Mouvement){
+  94   2        case Avancer:
+  95   2          COMMANDES_SER.Etat_Commande=mogo_1_2;
+  96   2          COMMANDES_SER.Vitesse_Mot1=(int)COMMANDES->Vitesse;
+  97   2          COMMANDES_SER.Vitesse_Mot2=(int)COMMANDES->Vitesse;
+  98   2        break;
+  99   2      
+ 100   2        case Reculer:
+ 101   2          COMMANDES_SER.Etat_Commande=mogo_1_2;
+ 102   2          COMMANDES_SER.Vitesse_Mot1=(int)-1*COMMANDES->Vitesse;
+ 103   2          COMMANDES_SER.Vitesse_Mot2=(int)-1*COMMANDES->Vitesse;
+ 104   2        break;
+ 105   2      
+ 106   2        case Stopper:
+ 107   2          COMMANDES_SER.Etat_Commande=Stop;
+ 108   2        break;
+ 109   2      
+ 110   2        case Rot_90D:
+ 111   2          COMMANDES_SER.Etat_Commande=digo_1;
+ 112   2          COMMANDES_SER.Vitesse_Mot1=(int)COMMANDES->Vitesse;
+ 113   2          COMMANDES_SER.Vitesse_Mot2=0;
+ 114   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(90);
+ 115   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(0);
+C51 COMPILER V9.52.0.0   FO_M5                                                             04/06/2016 23:30:57 PAGE 3   
+
+ 116   2        break;
+ 117   2      
+ 118   2        case Rot_90G:
+ 119   2          COMMANDES_SER.Etat_Commande=digo_2;
+ 120   2          COMMANDES_SER.Vitesse_Mot1=0;
+ 121   2          COMMANDES_SER.Vitesse_Mot2=(int)COMMANDES->Vitesse;
+ 122   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(0);
+ 123   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(90);
+ 124   2        break;
+ 125   2      
+ 126   2        case Rot_180D:
+ 127   2          COMMANDES_SER.Etat_Commande=digo_1;
+ 128   2          COMMANDES_SER.Vitesse_Mot1=(int)COMMANDES->Vitesse;
+ 129   2          COMMANDES_SER.Vitesse_Mot2=0;
+ 130   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(180);
+ 131   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(0);
+ 132   2        break;
+ 133   2      
+ 134   2        case Rot_180G:
+ 135   2          COMMANDES_SER.Etat_Commande=digo_2;
+ 136   2          COMMANDES_SER.Vitesse_Mot1=0;
+ 137   2          COMMANDES_SER.Vitesse_Mot2=(int)COMMANDES->Vitesse;
+ 138   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(0);
+ 139   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(180);
+ 140   2        break;
+ 141   2      
+ 142   2        case Rot_AngD:
+ 143   2          COMMANDES_SER.Etat_Commande=digo_1;
+ 144   2          COMMANDES_SER.Vitesse_Mot1=(int)COMMANDES->Vitesse;
+ 145   2          COMMANDES_SER.Vitesse_Mot2=0;
+ 146   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(COMMANDES->Angle);
+ 147   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(0);
+ 148   2        break;
+ 149   2      
+ 150   2        case Rot_AngG:
+ 151   2          COMMANDES_SER.Etat_Commande=digo_2;
+ 152   2          COMMANDES_SER.Vitesse_Mot1=0;
+ 153   2          COMMANDES_SER.Vitesse_Mot2=(int)COMMANDES->Vitesse;
+ 154   2          COMMANDES_SER.Ticks_mot1=Get_Nb_Ticks(0);
+ 155   2          COMMANDES_SER.Ticks_mot2=Get_Nb_Ticks(COMMANDES->Angle);
+ 156   2        break;
+ 157   2      
+ 158   2        }
+ 159   1      }
+ 160          
+ 161          int Get_Nb_Ticks(int theta){
+ 162   1          theta=theta*PI/180;
+ 163   1          return TICKS_PAR_TOUR*(theta/(2*PI))*(RAYON_PARCOURS/RAYON_ROUE);
+ 164   1      }
+ 165          
+ 166          
+ 167          void INIT_STRUCT_INFORMATIONS_CDC(){
+ 168   1        INFORMATIONS_CDC.Etat_Invite=Invite_non ;
+ 169   1        INFORMATIONS_CDC.MSG_Invit[0]='\0';
+ 170   1        INFORMATIONS_CDC.Etat_BUT_Mouvement=BUT_Atteint_oui;
+ 171   1        INFORMATIONS_CDC.Etat_BUT_Servo=BUT_Servo_non;
+ 172   1        INFORMATIONS_CDC.Etat_DCT_Obst= DCT_Obst_non;
+ 173   1        INFORMATIONS_CDC.Tab_Val_Obst=0;
+ 174   1        INFORMATIONS_CDC.Nbre_Val_obst=0;
+ 175   1        INFORMATIONS_CDC.Etat_RESULT_Courant=RESULT_Courant_non;
+ 176   1        INFORMATIONS_CDC.Etat_RESULT_Energie=RESULT_Energie_non;
+ 177   1        INFORMATIONS_CDC.Etat_RESULT_Position=RESULT_Position_non;
+C51 COMPILER V9.52.0.0   FO_M5                                                             04/06/2016 23:30:57 PAGE 4   
+
+ 178   1        INFORMATIONS_CDC.Pos_Coord_X=0;
+ 179   1        INFORMATIONS_CDC.Pos_Coord_Y=0;
+ 180   1        INFORMATIONS_CDC.Pos_Angle=0;
+ 181   1        INFORMATIONS_CDC.Etat_Aux=Aux_non;
+ 182   1        INFORMATIONS_CDC.MSG_Aux[0]='\0';
+ 183   1      }
+ 184          
+ 185          void INIT_STRUCT_COMMANDES_SER(){
+ 186   1        COMMANDES_SER.Etat_Commande=Commande_non;
+ 187   1        COMMANDES_SER.Set_P=10;
+ 188   1        COMMANDES_SER.Set_I=0;
+ 189   1        COMMANDES_SER.Set_D=0;
+ 190   1        COMMANDES_SER.Set_L_A=100;
+ 191   1        COMMANDES_SER.Ticks_mot1=0;
+ 192   1        COMMANDES_SER.Vitesse_Mot1=0;
+ 193   1        COMMANDES_SER.Ticks_mot2=0;
+ 194   1        COMMANDES_SER.Vitesse_Mot2=0;
+ 195   1      }
+ 196          
+ 197          void INIT_TAB_COMMADES_SLAVE(){
+ 198   1      
+ 199   1      }
+ 200          
+ 201          struct INFORMATIONS GET_STRUCT_INFORMATIONS_CDC(){
+ 202   1          return INFORMATIONS_CDC;
+ 203   1      }
+ 204          
+ 205          struct COMMANDES_SERIALIZER GET_STRUCT_COMMANDES_SER(){
+ 206   1          return COMMANDES_SER;
+ 207   1      }
+ 208          
+ 209          char* GET_TAB_COMMANDES_SLAVE()
+ 210          {
+ 211   1        return TAB_COMMANDES_SLAVE;
+ 212   1      }
+ 213          
+ 214          
+ 215          void Config_Timer0_F0_M5()
+ 216          {
+ 217   1        CKCON &= 0xF7;
+ 218   1        TF0=0;
+ 219   1        TMOD &= 0xF9; // Mise en mode 16 - bit counter/timer du Timer 0 et Selection de l'incrémentation
+ 220   1        TMOD |= 0x01; // du Timer 0 par la clock
+ 221   1        TR0 = 0;
+ 222   1        PT0 = 1; //INT Timer0 priorité haute
+ 223   1        ET0 = 1; // Activation interruption
+ 224   1      }
+ 225          
+ 226          void ISR_Timer0 () interrupt 1
+ 227          {
+ 228   1        TL0=Rechargement_L;
+ 229   1        TH0=Rechargement_H;
+ 230   1        Compteur_Duree++;
+ 231   1        TF0=0;
+ 232   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    627    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.52.0.0   FO_M5                                                             04/06/2016 23:30:57 PAGE 5   
+
+   DATA SIZE        =     55      16
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

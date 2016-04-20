@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"FO-M5_main.obj",
+"FO-M5.obj" 
+TO "FO-M5" 
+RAMSIZE(256) 

@@ -1,0 +1,501 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/06/2016  22:20:25  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, FO-M5_main.obj, FO-M5.obj TO FO-M5 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  FO-M5_main.obj (FO_M5_MAIN)
+  FO-M5.obj (FO_M5)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?ILDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?ISTOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+
+
+LINK MAP OF MODULE:  FO-M5 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0037H     UNIT         ?DT?FO_M5
+            DATA    003FH     0024H     UNIT         _DATA_GROUP_
+            DATA    0063H     0007H     UNIT         ?DT?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_MASTER?FO_M5
+            DATA    006AH     0003H     UNIT         ?DT?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_SLAVE?FO_M5
+            DATA    006DH     0003H     UNIT         ?DT?_MAJ_TAB_COMMANDES_SLAVE_FROM_MASTER?FO_M5
+            DATA    0070H     0003H     UNIT         ?DT?_MAJ_STRUCT_COMMANDES_SER_FROM_MASTER?FO_M5
+            IDATA   0073H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0007H     UNIT         ?PR?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_SLAVE?FO_M5
+            CODE    000AH     0001H     UNIT         ?PR?INIT_TAB_COMMADES_SLAVE?FO_M5
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0329H     UNIT         ?C?LIB_CODE
+            CODE    0337H     00F5H     UNIT         ?PR?_MAJ_STRUCT_COMMANDES_SER_FROM_MASTER?FO_M5
+            CODE    042CH     008BH     UNIT         ?PR?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_MASTER?FO_M5
+            CODE    04B7H     0058H     UNIT         ?PR?_GET_NB_TICKS?FO_M5
+            CODE    050FH     0034H     UNIT         ?PR?INIT_STRUCT_INFORMATIONS_CDC?FO_M5
+            CODE    0543H     0022H     UNIT         ?PR?INIT_STRUCT_COMMANDES_SER?FO_M5
+            CODE    0565H     0015H     UNIT         ?PR?ISR_TIMER0?FO_M5
+            CODE    057AH     0012H     UNIT         ?PR?CONFIG_TIMER0_F0_M5?FO_M5
+            CODE    058CH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0598H     0009H     UNIT         ?PR?MAIN?FO_M5_MAIN
+            CODE    05A1H     0007H     UNIT         ?PR?_MAJ_TAB_COMMANDES_SLAVE_FROM_MASTER?FO_M5
+            CODE    05A8H     0007H     UNIT         ?PR?GET_STRUCT_INFORMATIONS_CDC?FO_M5
+            CODE    05AFH     0007H     UNIT         ?PR?GET_STRUCT_COMMANDES_SER?FO_M5
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 2
+
+
+            CODE    05B6H     0007H     UNIT         ?PR?GET_TAB_COMMANDES_SLAVE?FO_M5
+
+
+
+OVERLAY MAP OF MODULE:   FO-M5 (?C_STARTUP)
+
+
+SEGMENT                                            DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH
+----------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----
+  +--> ?PR?MAIN?FO_M5_MAIN
+
+?PR?MAIN?FO_M5_MAIN                              003FH    0024H
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   _INITIALISATION_INFORMATIONS
+
+
+
+SYMBOL TABLE OF MODULE:  FO-M5 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:058CH         SEGMENT       ?C_C51STARTUP
+  I:0073H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:058FH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:058CH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:058CH         LINE#         133
+  C:058EH         LINE#         134
+  C:058FH         LINE#         135
+  C:0590H         LINE#         136
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 3
+
+
+  C:0592H         LINE#         185
+  C:0595H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        FO_M5_MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00C0H         PUBLIC        SMB0CN
+  C:0598H         PUBLIC        main
+  D:00F8H         PUBLIC        SPI0CN
+  D:0088H         PUBLIC        TCON
+  D:0098H         PUBLIC        SCON0
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:003FH         SYMBOL        Tab_INFO
+  D:0049H         SYMBOL        INFORMATION_M1
+  -------         ENDDO         
+  C:0598H         LINE#         4
+  C:0598H         LINE#         5
+  C:0598H         LINE#         10
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        FO_M5_MAIN
+
+  -------         MODULE        FO_M5
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0565H         PUBLIC        ISR_Timer0
+  D:0008H         PUBLIC        Rechargement_H
+  D:0009H         PUBLIC        Rechargement_L
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  C:042CH         PUBLIC        _MAJ_STRUCT_INFORMATIONS_CDC_from_MASTER
+  C:04CEH         PUBLIC        _Get_Nb_Ticks
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00C0H         PUBLIC        SMB0CN
+  C:057AH         PUBLIC        Config_Timer0_F0_M5
+  C:050FH         PUBLIC        INIT_STRUCT_INFORMATIONS_CDC
+  D:000AH         PUBLIC        Compteur_Duree
+  C:0337H         PUBLIC        _MAJ_STRUCT_COMMANDES_SER_from_MASTER
+  D:00F8H         PUBLIC        SPI0CN
+  C:05A1H         PUBLIC        _MAJ_TAB_COMMANDES_SLAVE_from_MASTER
+  D:000CH         PUBLIC        TAB_COMMANDES_SLAVE
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:00BBH         PUBLIC        AMX0SL
+  C:0003H         PUBLIC        _MAJ_STRUCT_INFORMATIONS_CDC_from_SLAVE
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 4
+
+
+  C:0543H         PUBLIC        INIT_STRUCT_COMMANDES_SER
+  B:00A8H.1       PUBLIC        ET0
+  D:0016H         PUBLIC        INFORMATIONS_CDC
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:05A8H         PUBLIC        GET_STRUCT_INFORMATIONS_CDC
+  B:00B8H.1       PUBLIC        PT0
+  B:0088H.4       PUBLIC        TR0
+  D:0098H         PUBLIC        SCON0
+  D:0030H         PUBLIC        COMMANDES_SER
+  D:00C8H         PUBLIC        T2CON
+  D:008EH         PUBLIC        CKCON
+  C:05AFH         PUBLIC        GET_STRUCT_COMMANDES_SER
+  C:05B6H         PUBLIC        GET_TAB_COMMANDES_SLAVE
+  B:00A0H.2       PUBLIC        P2__2
+  B:00A0H.3       PUBLIC        P2__3
+  C:000AH         PUBLIC        INIT_TAB_COMMADES_SLAVE
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _MAJ_STRUCT_INFORMATIONS_CDC_FROM_MASTER
+  D:0063H         SYMBOL        COMMANDES
+  -------         DO            
+  D:0066H         SYMBOL        Distance
+  D:0068H         SYMBOL        Duree
+  -------         ENDDO         
+  C:042CH         LINE#         18
+  C:0432H         LINE#         21
+  C:0438H         LINE#         26
+  C:0441H         LINE#         28
+  C:0444H         LINE#         29
+  C:0447H         LINE#         30
+  C:044AH         LINE#         31
+  C:044AH         LINE#         33
+  C:044EH         LINE#         34
+  C:0451H         LINE#         35
+  C:0454H         LINE#         36
+  C:0454H         LINE#         38
+  C:0456H         LINE#         41
+  C:046FH         LINE#         42
+  C:0471H         LINE#         44
+  C:0473H         LINE#         45
+  C:0475H         LINE#         48
+  C:0478H         LINE#         54
+  C:0488H         LINE#         55
+  C:0488H         LINE#         56
+  C:048BH         LINE#         58
+  C:048EH         LINE#         59
+  C:0491H         LINE#         60
+  C:0494H         LINE#         61
+  C:0497H         LINE#         63
+  C:0499H         LINE#         67
+  C:04ABH         LINE#         68
+  C:04ABH         LINE#         69
+  C:04ADH         LINE#         70
+  C:04B0H         LINE#         71
+  C:04B4H         LINE#         72
+  C:04B6H         LINE#         73
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 5
+
+
+  C:04B6H         LINE#         74
+  C:04B6H         LINE#         80
+  -------         ENDPROC       _MAJ_STRUCT_INFORMATIONS_CDC_FROM_MASTER
+  -------         PROC          _MAJ_STRUCT_INFORMATIONS_CDC_FROM_SLAVE
+  D:006AH         SYMBOL        Tab_INFO
+  C:0003H         LINE#         82
+  C:0009H         LINE#         84
+  -------         ENDPROC       _MAJ_STRUCT_INFORMATIONS_CDC_FROM_SLAVE
+  -------         PROC          _MAJ_TAB_COMMANDES_SLAVE_FROM_MASTER
+  D:006DH         SYMBOL        COMMANDES
+  C:05A1H         LINE#         86
+  C:05A7H         LINE#         88
+  -------         ENDPROC       _MAJ_TAB_COMMANDES_SLAVE_FROM_MASTER
+  -------         PROC          _MAJ_STRUCT_COMMANDES_SER_FROM_MASTER
+  D:0070H         SYMBOL        COMMANDES
+  C:0337H         LINE#         90
+  C:033DH         LINE#         94
+  C:0375H         LINE#         95
+  C:0375H         LINE#         96
+  C:0378H         LINE#         97
+  C:037EH         LINE#         98
+  C:037EH         LINE#         99
+  C:0380H         LINE#         101
+  C:0380H         LINE#         102
+  C:0383H         LINE#         103
+  C:0395H         LINE#         104
+  C:0397H         LINE#         105
+  C:0398H         LINE#         107
+  C:0398H         LINE#         108
+  C:039BH         LINE#         109
+  C:039CH         LINE#         111
+  C:039CH         LINE#         112
+  C:039FH         LINE#         113
+  C:03ADH         LINE#         114
+  C:03B0H         LINE#         115
+  C:03B2H         LINE#         116
+  C:03B2H         LINE#         117
+  C:03B4H         LINE#         119
+  C:03B4H         LINE#         120
+  C:03B4H         LINE#         121
+  C:03B4H         LINE#         122
+  C:03B4H         LINE#         123
+  C:03BBH         LINE#         124
+  C:03BDH         LINE#         125
+  C:03BFH         LINE#         127
+  C:03BFH         LINE#         128
+  C:03C2H         LINE#         129
+  C:03D0H         LINE#         130
+  C:03D3H         LINE#         131
+  C:03D6H         LINE#         132
+  C:03D6H         LINE#         133
+  C:03D8H         LINE#         135
+  C:03D8H         LINE#         136
+  C:03D8H         LINE#         137
+  C:03D8H         LINE#         138
+  C:03D8H         LINE#         139
+  C:03DFH         LINE#         140
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 6
+
+
+  C:03E3H         LINE#         141
+  C:03E5H         LINE#         143
+  C:03E5H         LINE#         144
+  C:03E8H         LINE#         145
+  C:03F6H         LINE#         146
+  C:03F9H         LINE#         147
+  C:0409H         LINE#         148
+  C:040CH         LINE#         149
+  C:040EH         LINE#         151
+  C:040EH         LINE#         152
+  C:040EH         LINE#         153
+  C:040EH         LINE#         154
+  C:040EH         LINE#         155
+  C:0415H         LINE#         156
+  C:042BH         LINE#         157
+  C:042BH         LINE#         159
+  C:042BH         LINE#         160
+  -------         ENDPROC       _MAJ_STRUCT_COMMANDES_SER_FROM_MASTER
+  C:04B7H         SYMBOL        L?0041
+  -------         PROC          L?0040
+  -------         ENDPROC       L?0040
+  C:04B7H         SYMBOL        L?0041
+  -------         PROC          _GET_NB_TICKS
+  D:0006H         SYMBOL        theta
+  C:04CEH         LINE#         162
+  C:04CEH         LINE#         163
+  C:04EEH         LINE#         164
+  C:050EH         LINE#         165
+  -------         ENDPROC       _GET_NB_TICKS
+  -------         PROC          INIT_STRUCT_INFORMATIONS_CDC
+  C:050FH         LINE#         168
+  C:050FH         LINE#         169
+  C:0512H         LINE#         170
+  C:051BH         LINE#         171
+  C:051EH         LINE#         172
+  C:0520H         LINE#         173
+  C:0522H         LINE#         174
+  C:0528H         LINE#         175
+  C:052AH         LINE#         176
+  C:052CH         LINE#         177
+  C:052EH         LINE#         178
+  C:0530H         LINE#         179
+  C:0532H         LINE#         180
+  C:0534H         LINE#         181
+  C:0538H         LINE#         182
+  C:053AH         LINE#         183
+  -------         ENDPROC       INIT_STRUCT_INFORMATIONS_CDC
+  -------         PROC          INIT_STRUCT_COMMANDES_SER
+  C:0543H         LINE#         186
+  C:0543H         LINE#         187
+  C:0546H         LINE#         188
+  C:054BH         LINE#         189
+  C:054FH         LINE#         190
+  C:0553H         LINE#         191
+  C:0558H         LINE#         192
+  C:055CH         LINE#         193
+  C:055EH         LINE#         194
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 7
+
+
+  C:0562H         LINE#         195
+  C:0564H         LINE#         196
+  -------         ENDPROC       INIT_STRUCT_COMMANDES_SER
+  -------         PROC          INIT_TAB_COMMADES_SLAVE
+  C:000AH         LINE#         198
+  C:000AH         LINE#         200
+  -------         ENDPROC       INIT_TAB_COMMADES_SLAVE
+  -------         PROC          GET_STRUCT_INFORMATIONS_CDC
+  C:05A8H         LINE#         202
+  C:05A8H         LINE#         203
+  C:05AEH         LINE#         204
+  -------         ENDPROC       GET_STRUCT_INFORMATIONS_CDC
+  -------         PROC          GET_STRUCT_COMMANDES_SER
+  C:05AFH         LINE#         206
+  C:05AFH         LINE#         207
+  C:05B5H         LINE#         208
+  -------         ENDPROC       GET_STRUCT_COMMANDES_SER
+  -------         PROC          GET_TAB_COMMANDES_SLAVE
+  C:05B6H         LINE#         210
+  C:05B6H         LINE#         211
+  C:05B6H         LINE#         212
+  C:05BCH         LINE#         213
+  -------         ENDPROC       GET_TAB_COMMANDES_SLAVE
+  -------         PROC          CONFIG_TIMER0_F0_M5
+  C:057AH         LINE#         216
+  C:057AH         LINE#         217
+  C:057AH         LINE#         218
+  C:057DH         LINE#         219
+  C:057FH         LINE#         220
+  C:0582H         LINE#         221
+  C:0585H         LINE#         222
+  C:0587H         LINE#         223
+  C:0589H         LINE#         224
+  C:058BH         LINE#         225
+  -------         ENDPROC       CONFIG_TIMER0_F0_M5
+  -------         PROC          ISR_TIMER0
+  C:0565H         LINE#         227
+  C:0567H         LINE#         229
+  C:056AH         LINE#         230
+  C:056DH         LINE#         231
+  C:0575H         LINE#         232
+  C:0577H         LINE#         233
+  -------         ENDPROC       ISR_TIMER0
+  -------         ENDMOD        FO_M5
+
+  -------         MODULE        ?C?FPMUL
+  C:000EH         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPDIV
+  C:0117H         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:01BEH         PUBLIC        ?C?FCASTC
+  C:01B9H         PUBLIC        ?C?FCASTI
+  C:01B4H         PUBLIC        ?C?FCASTL
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 8
+
+
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:01F2H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0273H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:02A0H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?IMUL
+  C:02B2H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+  -------         MODULE        ?C?ILDOPTR
+  C:02C4H         PUBLIC        ?C?ILDOPTR
+  -------         ENDMOD        ?C?ILDOPTR
+
+  -------         MODULE        ?C?ISTOPTR
+  C:02FCH         PUBLIC        ?C?ISTOPTR
+  -------         ENDMOD        ?C?ISTOPTR
+
+  -------         MODULE        ?C?LNEG
+  C:0329H         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_MASTER?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MAJ_STRUCT_INFORMATIONS_CDC_FROM_SLAVE?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MAJ_TAB_COMMANDES_SLAVE_FROM_MASTER?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MAJ_STRUCT_COMMANDES_SER_FROM_MASTER?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_STRUCT_INFORMATIONS_CDC?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_STRUCT_COMMANDES_SER?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_TAB_COMMADES_SLAVE?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GET_STRUCT_INFORMATIONS_CDC?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GET_STRUCT_COMMANDES_SER?FO_M5
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  22:20:25  PAGE 9
+
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GET_TAB_COMMANDES_SLAVE?FO_M5
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CONFIG_TIMER0_F0_M5?FO_M5
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _INITIALISATION_INFORMATIONS
+    MODULE:  FO-M5_main.obj (FO_M5_MAIN)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _INITIALISATION_INFORMATIONS
+    MODULE:  FO-M5_main.obj (FO_M5_MAIN)
+    ADDRESS: 059FH
+
+Program Size: data=116.0 xdata=0 code=1469
+LINK/LOCATE RUN COMPLETE.  13 WARNING(S),  0 ERROR(S)

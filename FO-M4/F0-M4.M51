@@ -1,0 +1,321 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/29/2016  17:02:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE BSE_Main.obj, LIB_BSE_ADC.obj, LIB_BSE_Config_Globale.obj, LIB_BSE_GPIO.obj TO F0-M4 RAMSIZE (2
+>> 56)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  BSE_Main.obj (BSE_MAIN)
+  LIB_BSE_ADC.obj (LIB_BSE_ADC)
+  LIB_BSE_Config_Globale.obj (LIB_BSE_CONFIG_GLOBALE)
+  LIB_BSE_GPIO.obj (LIB_BSE_GPIO)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\KEIL\C51\LIB\C51FPS.LIB (EXP)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPADD)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPSERIES)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LLDCODE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LLDCODE0)
+
+
+LINK MAP OF MODULE:  F0-M4 (BSE_MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         _DATA_GROUP_
+            IDATA   0014H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     03D8H     UNIT         ?C?LIB_CODE
+            CODE    03DBH     009AH     UNIT         ?PR?EXP?EXP
+            CODE    0475H     0034H     UNIT         ?PR?_CONVERSION?LIB_BSE_ADC
+            CODE    04A9H     002FH     UNIT         ?PR?MAIN?BSE_MAIN
+            CODE    04D8H     000DH     UNIT         ?PR?CFG_ADC0?LIB_BSE_ADC
+            CODE    04E5H     000CH     UNIT         ?PR?ACQ_ADC?LIB_BSE_ADC
+            CODE    04F1H     000CH     UNIT         ?C_C51STARTUP
+            CODE    04FDH     0009H     UNIT         ?PR?RESET_INIT?LIB_BSE_CONFIG_GLOBALE
+            CODE    0506H     0007H     UNIT         ?PR?CONFIG_GPIO?LIB_BSE_GPIO
+            CODE    050DH     0006H     UNIT         ?PR?INIT_DEVICE?LIB_BSE_CONFIG_GLOBALE
+            CODE    0513H     0006H     UNIT         ?PR?PORTS_INIT?LIB_BSE_CONFIG_GLOBALE
+            CODE    0519H     0004H     UNIT         ?PR?CFG_VREF?LIB_BSE_ADC
+
+
+
+OVERLAY MAP OF MODULE:   F0-M4 (BSE_MAIN)
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2016  17:02:45  PAGE 2
+
+
+SEGMENT                                          DATA_GROUP 
+  +--> CALLED SEGMENT                          START    LENGTH
+--------------------------------------------------------------
+?C_C51STARTUP                                  -----    -----
+  +--> ?PR?MAIN?BSE_MAIN
+
+?PR?MAIN?BSE_MAIN                              0008H    0008H
+  +--> ?PR?INIT_DEVICE?LIB_BSE_CONFIG_GLOBALE
+  +--> ?PR?CONFIG_GPIO?LIB_BSE_GPIO
+  +--> ?PR?CFG_ADC0?LIB_BSE_ADC
+  +--> ?PR?CFG_VREF?LIB_BSE_ADC
+  +--> ?PR?ACQ_ADC?LIB_BSE_ADC
+  +--> ?PR?_CONVERSION?LIB_BSE_ADC
+
+?PR?INIT_DEVICE?LIB_BSE_CONFIG_GLOBALE         -----    -----
+  +--> ?PR?PORTS_INIT?LIB_BSE_CONFIG_GLOBALE
+  +--> ?PR?RESET_INIT?LIB_BSE_CONFIG_GLOBALE
+
+?PR?_CONVERSION?LIB_BSE_ADC                    0010H    0004H
+  +--> ?PR?EXP?EXP
+
+
+
+SYMBOL TABLE OF MODULE:  F0-M4 (BSE_MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BSE_MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00C0H         PUBLIC        SMB0CN
+  C:04A9H         PUBLIC        main
+  D:00F8H         PUBLIC        SPI0CN
+  D:0088H         PUBLIC        TCON
+  D:0098H         PUBLIC        SCON0
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.2       PUBLIC        P2__2
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        Distance
+  -------         DO            
+  D:000CH         SYMBOL        Tension1
+  -------         ENDDO         
+  -------         ENDDO         
+  C:04A9H         LINE#         37
+  C:04A9H         LINE#         42
+  C:04ACH         LINE#         43
+  C:04AFH         LINE#         44
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2016  17:02:45  PAGE 3
+
+
+  C:04B2H         LINE#         45
+  C:04B5H         LINE#         46
+  C:04B7H         LINE#         50
+  C:04B7H         LINE#         51
+  C:04B7H         LINE#         52
+  C:04BAH         LINE#         53
+  C:04CBH         LINE#         54
+  C:04D6H         LINE#         55
+  C:04D6H         LINE#         56
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        BSE_MAIN
+
+  -------         MODULE        LIB_BSE_ADC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:04E5H         PUBLIC        ACQ_ADC
+  D:00BCH         PUBLIC        ADC0CF
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00D1H         PUBLIC        REF0CN
+  D:00BAH         PUBLIC        AMX0CF
+  B:00E8H.5       PUBLIC        AD0INT
+  D:00C0H         PUBLIC        SMB0CN
+  C:04D8H         PUBLIC        CFG_ADC0
+  C:0475H         PUBLIC        _Conversion
+  D:00F8H         PUBLIC        SPI0CN
+  D:0088H         PUBLIC        TCON
+  D:00BBH         PUBLIC        AMX0SL
+  D:00BFH         PUBLIC        ADC0H
+  D:0098H         PUBLIC        SCON0
+  C:0519H         PUBLIC        CFG_VREF
+  D:00C8H         PUBLIC        T2CON
+  B:00E8H.4       PUBLIC        AD0BUSY
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          CFG_VREF
+  C:0519H         LINE#         27
+  C:0519H         LINE#         28
+  C:0519H         LINE#         29
+  C:051CH         LINE#         30
+  -------         ENDPROC       CFG_VREF
+  -------         PROC          CFG_ADC0
+  C:04D8H         LINE#         39
+  C:04D8H         LINE#         40
+  C:04D8H         LINE#         41
+  C:04DBH         LINE#         42
+  C:04DEH         LINE#         43
+  C:04E1H         LINE#         45
+  C:04E4H         LINE#         50
+  -------         ENDPROC       CFG_ADC0
+  -------         PROC          ACQ_ADC
+  C:04E5H         LINE#         59
+  C:04E5H         LINE#         60
+  C:04E5H         LINE#         61
+  C:04E7H         LINE#         62
+  C:04E9H         LINE#         63
+  C:04ECH         LINE#         64
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2016  17:02:45  PAGE 4
+
+
+  C:04EEH         LINE#         65
+  C:04F0H         LINE#         66
+  -------         ENDPROC       ACQ_ADC
+  -------         PROC          _CONVERSION
+  D:0004H         SYMBOL        TensHexa
+  -------         DO            
+  D:0010H         SYMBOL        Tension2
+  D:0004H         SYMBOL        Distance
+  -------         ENDDO         
+  C:0475H         LINE#         67
+  C:0475H         LINE#         68
+  C:0475H         LINE#         69
+  C:0487H         LINE#         71
+  C:04A8H         LINE#         72
+  C:04A8H         LINE#         73
+  -------         ENDPROC       _CONVERSION
+  -------         ENDMOD        LIB_BSE_ADC
+
+  -------         MODULE        LIB_BSE_CONFIG_GLOBALE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00FFH         PUBLIC        WDTCN
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  D:00A6H         PUBLIC        P2MDOUT
+  C:0513H         PUBLIC        Ports_Init
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00C0H         PUBLIC        SMB0CN
+  D:00F8H         PUBLIC        SPI0CN
+  D:0088H         PUBLIC        TCON
+  C:050DH         PUBLIC        Init_Device
+  D:0098H         PUBLIC        SCON0
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.2       PUBLIC        P2__2
+  D:00D0H         PUBLIC        PSW
+  C:04FDH         PUBLIC        Reset_Init
+  -------         PROC          INIT_DEVICE
+  C:050DH         LINE#         15
+  C:050DH         LINE#         16
+  C:050DH         LINE#         17
+  C:0510H         LINE#         18
+  -------         ENDPROC       INIT_DEVICE
+  -------         PROC          PORTS_INIT
+  C:0513H         LINE#         22
+  C:0513H         LINE#         23
+  C:0513H         LINE#         24
+  C:0516H         LINE#         25
+  C:0518H         LINE#         26
+  -------         ENDPROC       PORTS_INIT
+  -------         PROC          RESET_INIT
+  C:04FDH         LINE#         28
+  C:04FDH         LINE#         29
+  C:04FDH         LINE#         30
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2016  17:02:45  PAGE 5
+
+
+  C:04FFH         LINE#         31
+  C:0502H         LINE#         32
+  C:0505H         LINE#         33
+  -------         ENDPROC       RESET_INIT
+  -------         ENDMOD        LIB_BSE_CONFIG_GLOBALE
+
+  -------         MODULE        LIB_BSE_GPIO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A8H         PUBLIC        IE
+  D:00D8H         PUBLIC        PCA0CN
+  D:00B8H         PUBLIC        IP
+  D:00E1H         PUBLIC        XBR0
+  D:00E3H         PUBLIC        XBR2
+  D:00C0H         PUBLIC        SMB0CN
+  D:00F8H         PUBLIC        SPI0CN
+  D:0088H         PUBLIC        TCON
+  D:0098H         PUBLIC        SCON0
+  D:00C8H         PUBLIC        T2CON
+  C:0506H         PUBLIC        Config_GPIO
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          CONFIG_GPIO
+  C:0506H         LINE#         16
+  C:0506H         LINE#         17
+  C:0506H         LINE#         18
+  C:0509H         LINE#         19
+  C:050CH         LINE#         20
+  -------         ENDPROC       CONFIG_GPIO
+  -------         ENDMOD        LIB_BSE_GPIO
+
+  -------         MODULE        ?C?FPMUL
+  C:0003H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPDIV
+  C:010CH         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:01B3H         PUBLIC        ?C?FCASTC
+  C:01AEH         PUBLIC        ?C?FCASTI
+  C:01A9H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        EXP
+  C:0413H         PUBLIC        _EXP
+  -------         ENDMOD        EXP
+
+  -------         MODULE        ?C?FPADD
+  C:0238H         PUBLIC        ?C?FPADD
+  C:0234H         PUBLIC        ?C?FPSUB
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?CASTF
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2016  17:02:45  PAGE 6
+
+
+  C:0329H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?LNEG
+  C:03ADH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?LLDCODE
+  C:03BBH         PUBLIC        ?C?LLDCODE
+  -------         ENDMOD        ?C?LLDCODE
+
+  -------         MODULE        ?C?LLDCODE0
+  C:03CBH         PUBLIC        ?C?LLDCODE0
+  -------         ENDMOD        ?C?LLDCODE0
+
+Program Size: data=21.0 xdata=0 code=1309
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
