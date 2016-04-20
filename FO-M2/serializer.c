@@ -29,9 +29,9 @@ void talk_serializer(struct COMMANDES_SERIALIZER  *s,struct INFORMATIONS_SERIALI
 {
     char buf1[15];
     char command[25];
-		int placeholder;
-	
-		//struct INFORMATIONS_SERIALIZER *cptr = &r ;
+    int placeholder;
+
+    //struct INFORMATIONS_SERIALIZER *cptr = &r ;
 
 
 
@@ -46,15 +46,15 @@ void talk_serializer(struct COMMANDES_SERIALIZER  *s,struct INFORMATIONS_SERIALI
         case Getenc_1 :
             Send_Serializer("getenc 1");
             //listen to response
-//            receive_traduite(serializer_response(),1,cptr);
+            //            receive_traduite(serializer_response(),1,cptr);
             break;
         case Getenc_2:
             Send_Serializer("getenc 2");
- //           receive_traduite(serializer_response(),2,cptr);
+            //           receive_traduite(serializer_response(),2,cptr);
             break;
         case Getenc_1_2 :
             Send_Serializer("getenc 1 2");
-  //          receive_traduite(serializer_response(),3,cptr);
+            //          receive_traduite(serializer_response(),3,cptr);
 
             break;
 
@@ -75,30 +75,26 @@ The vel value specifies the motor velocity, and itâ€™s range depends on you
 You will have to determine which direction is positive for your motors, and connect the motors wires to the terminals on the Serializer board in the appropriate configuration.*/
 
         case mogo_1 :
-					placeholder=s->Vitesse_Mot1;
+            placeholder=s->Vitesse_Mot1;
             sprintf(buf1, "%d", placeholder);
             strcpy(command, "mogo 1:");
-            strcpy(command, buf1);
+            strcat(command, buf1);
             Send_Serializer(command);
             break;
         case mogo_2 :
-					placeholder=s->Vitesse_Mot2;
+            placeholder=s->Vitesse_Mot2;
             sprintf(buf1, "%d", placeholder);
             strcpy(command, "mogo 2:");
-            strcpy(command, buf1);
+            strcat(command, buf1);
             Send_Serializer(command);
             break;
         case mogo_1_2 :
-					placeholder=s->Vitesse_Mot1;
-					
+            placeholder=s->Vitesse_Mot1;
             sprintf(buf1, "%d",placeholder);
-						
-				
-           strcpy(command, "mogo 1:");
+            strcpy(command, "mogo 1:");
             strcat(command, buf1);
-				placeholder=s->Vitesse_Mot2;
+            placeholder=s->Vitesse_Mot2;
             sprintf(buf1, "%d", placeholder);
-
             strcat(command, " 2:");
             strcat(command, buf1);
             Send_Serializer(command);
@@ -107,24 +103,24 @@ You will have to determine which direction is positive for your motors, and conn
 
         case Vpid_set :
             strcpy(command, "vpid ");
-				
+
             sprintf(buf1, "%d", s->Set_P);
-            strcpy(command, buf1);
-            strcpy(command, ":");
+            strcat(command, buf1);
+            strcat(command, ":");
             sprintf(buf1, "%d", s->Set_I);
-            strcpy(command, buf1);
-            strcpy(command, ":");
+            strcat(command, buf1);
+            strcat(command, ":");
             sprintf(buf1, "%d", s->Set_D);
-            strcpy(command, buf1);
-            strcpy(command, ":");
+            strcat(command, buf1);
+            strcat(command, ":");
             sprintf(buf1, "%d", s->Set_L_A);
-            strcpy(command, buf1);
+            strcat(command, buf1);
 
             Send_Serializer(command);
             break;
         case Vpid_read :
             Send_Serializer("vpid");
- //           receive_traduite(serializer_response(),4,cptr);
+            //           receive_traduite(serializer_response(),4,cptr);
 
             break;
 
@@ -138,40 +134,47 @@ Distance specifies the distance (in encoder ticks ) which you want your robot to
 
         case digo_1 :
             strcpy(command, "digo 1 : ");
-            sprintf(buf1, "%d", s->Ticks_mot1);
-            strcpy(command, buf1);
-            strcpy(command, " : ");
-				placeholder=s->Vitesse_Mot1;
+            placeholder=s->Ticks_mot1;
+
             sprintf(buf1, "%d", placeholder);
-            strcpy(command, buf1);
+            strcat(command, buf1);
+            strcat(command, " : ");
+            placeholder=s->Vitesse_Mot1;
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
             Send_Serializer(command);
             break;
         case digo_2 :
             strcpy(command, "digo 2 : ");
-            sprintf(buf1, "%d", s->Ticks_mot2);
-            strcpy(command, buf1);
-            strcpy(command, " : ");
-				placeholder=s->Vitesse_Mot2;
+            placeholder=s->Ticks_mot2;
+
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
+            strcat(command, " : ");
+            placeholder=s->Vitesse_Mot2;
             sprintf(buf1, "%d",placeholder );
-            strcpy(command, buf1);
+            strcat(command, buf1);
             Send_Serializer(command);
             break;
         case digo_1_2 :
             strcpy(command, "digo 1 : ");
-				placeholder=s->Vitesse_Mot1;
-				
-            sprintf(buf1, "%d", s->Ticks_mot1);
-            strcpy(command, buf1);
-            strcpy(command, " : ");
+            placeholder=s->Ticks_mot1;
+
             sprintf(buf1, "%d", placeholder);
-            strcpy(command, buf1);
-            strcpy(command, " 2 : ");
-            sprintf(buf1, "%d", s->Ticks_mot2);
-            strcpy(command, buf1);
-            strcpy(command, " : ");
-				placeholder=s->Vitesse_Mot2;
+            strcat(command, buf1);
+            strcat(command, " : ");
+            placeholder=s->Vitesse_Mot1;
             sprintf(buf1, "%d", placeholder);
-            strcpy(command, buf1);
+            strcat(command, buf1);
+            strcat(command, " 2 : ");
+            placeholder=s->Ticks_mot2;
+
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
+            strcat(command, " : ");
+            placeholder=s->Vitesse_Mot2;
+            sprintf(buf1, "%d",placeholder );
+            strcat(command, buf1);
             Send_Serializer(command);
             break;
 
@@ -182,23 +185,27 @@ Distance specifies the distance (in encoder ticks ) which you want your robot to
 
         case Dpid_set :
             strcpy(command, "dpid ");
-            sprintf(buf1, "%d", s->Set_P);
-            strcpy(command, buf1);
-            strcpy(command, ":");
-            sprintf(buf1, "%d", s->Set_I);
-            strcpy(command, buf1);
-            strcpy(command, ":");
-            sprintf(buf1, "%d", s->Set_D);
-            strcpy(command, buf1);
-            strcpy(command, ":");
-            sprintf(buf1, "%d", s->Set_L_A);
-            strcpy(command, buf1);
+            placeholder=s->Set_P;
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
+            strcat(command, ":");
+            placeholder=s->Set_I;
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
+            strcat(command, ":");
+            placeholder=s->Set_D;
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
+            strcat(command, ":");
+            placeholder=s->Set_L_A;
+            sprintf(buf1, "%d", placeholder);
+            strcat(command, buf1);
 
             Send_Serializer(command);
             break;
         case Dpid_read :
             Send_Serializer("dpid");
- //           receive_traduite(serializer_response(),5,cptr);
+            //           receive_traduite(serializer_response(),5,cptr);
 
             break;
             /*The rpid command sets the default PID params known to work with either the Stinger or Traxster Robotic Kits in the firmware. This makes it quick and easy to set up the PID params for both robots.*/
@@ -211,7 +218,7 @@ Distance specifies the distance (in encoder ticks ) which you want your robot to
 */
         case Pids :
             Send_Serializer("pids");
-  //          receive_traduite(serializer_response(),6,cptr);
+            //          receive_traduite(serializer_response(),6,cptr);
 
             break;
 
@@ -223,7 +230,7 @@ Distance specifies the distance (in encoder ticks ) which you want your robot to
 velocity returned is based on the PIDL parameter configuration.*/
         case Vel :
             Send_Serializer("vel");
-  //          receive_traduite(serializer_response(),7,cptr);
+            //          receive_traduite(serializer_response(),7,cptr);
 
             break;
             /*Restores the factory default settings, and resets the board. NOTE: This will erase any configurations you have saved to EEPROM, including VPID, DPID, and baud rate settings.*/
@@ -239,9 +246,9 @@ velocity returned is based on the PIDL parameter configuration.*/
 
 void Send_Serializer(const char* char_ptr){
     char command[50];
-   
-	strcpy(command, char_ptr);
-     strcat(command, "\r\n\r");
+
+    strcpy(command, char_ptr);
+    strcat(command, "\r\n\r");
     Send_String(command);
 }
 
@@ -249,7 +256,7 @@ void Send_Serializer(const char* char_ptr){
 void serializer_response(){
 
     //TODO: avec F0-M1
-	
+
 }
 
 

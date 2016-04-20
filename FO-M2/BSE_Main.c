@@ -10,57 +10,73 @@
 //------------------------------------------------------------------------------------
 // Includes
 //------------------------------------------------------------------------------------
+//#include <stdio.h>
+
 #include <c8051f020.h>  										// SFR declarations
-#include "LIB_BSE_Config_Globale.h"
-#include "LIB_BSE_GPIO.h"
-#include "LIB_BSE_INT_UART.h"
-//#include <stdio.h>   
-#include "serializer.h"
-#include "Structure.h"
+#include <LIB_BSE_Config_Globale.h>
+#include <LIB_BSE_GPIO.h>
+#include <LIB_BSE_UART.h>
+#include <Structure_Serializer.c>
 
- IN_M2 xdata Struct_R;
- OUT_M2 xdata Struct_E;
+#include <Structures.h>
+
+//
+//#include <stdio.h>
+//    /* card structure definition */
+//    struct card
+//    {
+//      int face; // define pointer face
+//    };// end structure card
+//
+//    typedef struct card Card ;
+//
+//    /* prototype */
+//    void passByReference(Card *c) ;
+//
+//    int main(void)
+//    {
+//    Card c ;
+//    c.face = 1 ;
+//    Card *cptr = &c ; // pointer to Card c
+//
+//    printf("The value of c before function passing = %d\n", c.face);
+//    printf("The value of cptr before function = %d\n",cptr->face);
+//
+//    passByReference(cptr);
+//
+//    printf("The value of c after function passing = %d\n", c.face);
+//
+//        return 0 ; // successfully ran program
+//    }
+//
+//
+//    void passByReference(Card *c)
+//    {
+//        c->face = 4;
+//    }
+//
+
+
+typedef struct COMMANDES_SERIALIZER Struct_R ;
+typedef struct INFORMATIONS_SERIALIZER Struct_E;
 
 
 
 
+void serializer (Struct_R *s,Struct_E *r) {
 
-void main (void) {
-//------------------------------------------------------------------------------------
-// Programme de config
-//------------------------------------------------------------------------------------
-   Init_Device();  													// Initialisation du microcontrôleur
+ Struct_R *cpts = &s ;
+ Struct_E *cptr = &r ;
+
+    //this should be done in another file
+   Init_Device();  													// Initialisation du microcontrÙleur
 	 Port_IO_Init();
 	 CFG_UART1();
-	
-	
-//------------------------------------------------------------------------------------
-// Programme main
-//------------------------------------------------------------------------------------
-while(1)
-{
-unsigned int num=45;
-	
-	 xdata char car_recu;
-         
-        //putchar('\n',80);     
-        car_recu=getchar();
-        if(car_recu=='>')    
-                {
-       Struct_R.Etat_Commande=mogo_1_2;
-	
-	Struct_R.Vitesse_Mot1=45;
-	Struct_R.Vitesse_Mot2=45;
-	//Send_String("coucou\r\n");
-	
-	talk_serializer(&Struct_R,&Struct_E);
-        car_recu='p';
-                //  Send_String("blink 1:50 2:50\r\n");
-        }else if (car_recu=='s')                {
-        Send_String("stop\r\n\r");
-        car_recu='p';
-            }
-	
-}
+    //
+
+
+talk_serializer(cpts,cptr);
+
+
 
 }
