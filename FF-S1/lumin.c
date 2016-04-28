@@ -31,24 +31,28 @@
 void Lumiere (unsigned char* intensity, unsigned char* Lum_ON, unsigned char* Lum_OFF, unsigned char* Lum_Nbre) {
 
     if(intensity != 0){
-        Send_Lumin("");
+        send_lumin(intensity);
         return;
     }
 
     if(Lum_ON != 0){
-        Send_Lumin("");
+        send_lumin(Lum_ON);
         return;
     }
 
     if(Lum_OFF != 0){
-        Send_Lumin("");
+        send_lumin(Lum_OFF);
         return;
     }
 
     if(Lum_Nbre != 0){
-        Send_Lumin("");
+        send_lumin("");
         return;
     }
+
+
+
+
 
 
 }
@@ -56,7 +60,7 @@ void Lumiere (unsigned char* intensity, unsigned char* Lum_ON, unsigned char* Lu
 /*Extinction inconditionnelle de la source lumineuse*/
 void Lumiere_Stop (void) {
 
-
+send_lumin(255);
 
 }
 
